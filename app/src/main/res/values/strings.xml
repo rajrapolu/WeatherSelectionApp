@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WeatherSelectionApp</string>
+    <string name="city_name">City Name</string>
+    <string name="country_name">Country</string>
+    <string name="get_weather">Get Weather</string>
+    <string name="welcome_label">Welcome! Enter City name and Country</string>
 </resources>
