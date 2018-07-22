@@ -9,5 +9,5 @@ import retrofit2.http.Query
 interface WeatherService {
 
     @GET("data/2.5/forecast/")
-    fun getOpenWeatherData(@Query("q") cityName: String, @Query("APPID") apiKey: String): Call<OpenWeatherModel.LocationWeatherDTO>
+    fun getOpenWeatherData(@Query("q") cityName: String, @Query("units") units: String, @Query("APPID") apiKey: String): Call<OpenWeatherModel.LocationWeatherDTO>
 }

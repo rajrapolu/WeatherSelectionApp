@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.weather.coding.weatherselectionapp.NotificationUtil
 import com.weather.coding.weatherselectionapp.OpenWeatherModel
 import com.weather.coding.weatherselectionapp.R
 import kotlinx.android.synthetic.main.activity_weather_provider.*
@@ -23,7 +24,14 @@ class LocationInputActivity : AppCompatActivity() {
 
         startObserving()
 
+        createPeriodicWeatherFetchCall()
+        NotificationUtil.createNotificationChannel(applicationContext)
+
         location_continue.setOnClickListener{ _ -> onButtonClicked()}
+    }
+
+    private fun createPeriodicWeatherFetchCall() {
+        mLocationInputViewModel.createPeriodicFetchCall(applicationContext)
     }
 
     /**

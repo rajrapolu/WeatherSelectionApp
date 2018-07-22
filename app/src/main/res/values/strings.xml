@@ -4,4 +4,6 @@
     <string name="country_name">Country</string>
     <string name="get_weather">Get Weather</string>
     <string name="welcome_label">Welcome! Enter City name and Country</string>
+    <string name="notification_title">New weather data available</string>
+    <string name="notification_text">Temp is %1$s at %2$s</string>
 </resources>

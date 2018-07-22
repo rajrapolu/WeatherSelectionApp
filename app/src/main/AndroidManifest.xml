@@ -21,6 +21,10 @@
             </intent-filter>
 
         </activity>
+        <receiver android:name=".networkcalls.PeriodicNotificationService"
+            android:process=":remote"/>
+        <service android:name=".networkcalls.NotificationService"
+            android:exported="false"/>
     </application>
 
 </manifest>

@@ -16,7 +16,7 @@ class NetworkRequests {
 
     fun getOpenWeatherInformation(cityName: String, countryName: String, listener: NetworkCallListener<OpenWeatherModel.LocationWeatherDTO>) {
         RetrofitService.getRetrofitService()
-                ?.getOpenWeatherData("$cityName,$countryName", ApiKeyInfo.OPEN_WEATHER_API_KEY)
+                ?.getOpenWeatherData("$cityName,$countryName", "imperial", ApiKeyInfo.OPEN_WEATHER_API_KEY)
                 ?.enqueue(object : Callback<OpenWeatherModel.LocationWeatherDTO> {
                     override fun onFailure(call: Call<OpenWeatherModel.LocationWeatherDTO>?, t: Throwable?) {
                         Log.i("verifyingObject", "failed" + t.toString())
