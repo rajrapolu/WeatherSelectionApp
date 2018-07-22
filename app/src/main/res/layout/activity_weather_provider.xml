@@ -24,6 +24,7 @@
             android:id="@+id/location_city_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:layout_marginTop="@dimen/default_margin_padding"
             android:hint="@string/city_name" />
 
@@ -31,6 +32,7 @@
             android:id="@+id/location_country_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:layout_marginTop="@dimen/default_margin_padding"
             android:hint="@string/country_name" />
 

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.weather.coding.weatherselectionapp.OpenWeatherModel
 import com.weather.coding.weatherselectionapp.R
-import com.weather.coding.weatherselectionapp.UnitsUtil
+import com.weather.coding.weatherselectionapp.Util.UnitsUtil
 import kotlinx.android.synthetic.main.activity_current_weather.*
 
 private const val LOCATION_WEATHER_KEY: String = "LOCATION_WEATHER_KEY"

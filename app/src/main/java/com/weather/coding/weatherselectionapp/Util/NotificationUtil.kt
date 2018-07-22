@@ -1,4 +1,4 @@
-package com.weather.coding.weatherselectionapp
+package com.weather.coding.weatherselectionapp.Util
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -6,6 +6,8 @@ import android.content.Context
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import com.weather.coding.weatherselectionapp.OpenWeatherModel
+import com.weather.coding.weatherselectionapp.R
 
 class NotificationUtil {
 
