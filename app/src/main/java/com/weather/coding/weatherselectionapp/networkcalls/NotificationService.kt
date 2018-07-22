@@ -3,7 +3,7 @@ package com.weather.coding.weatherselectionapp.networkcalls
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.weather.coding.weatherselectionapp.NotificationUtil
+import com.weather.coding.weatherselectionapp.Util.NotificationUtil
 import com.weather.coding.weatherselectionapp.OpenWeatherModel
 
 class NotificationService: Service(), NetworkRequests.NetworkCallListener<OpenWeatherModel.LocationWeatherDTO> {
