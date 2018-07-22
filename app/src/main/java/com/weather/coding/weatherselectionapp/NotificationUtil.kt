@@ -49,7 +49,7 @@ class NotificationUtil {
 
         private fun createNotificationText(context: Context, weatherList: List<OpenWeatherModel.WeatherListDTO>?, cityName: String?): CharSequence? {
             if (weatherList != null && weatherList.size > 1) {
-                return context.getString(R.string.notification_text, weatherList[0].mainWeather?.temp, cityName)
+                return context.getString(R.string.notification_text, weatherList[0].mainWeather?.temp, UnitsUtil.getFahrenheitUnit(), cityName)
             }
             return null
         }
