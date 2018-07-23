@@ -36,7 +36,7 @@ class SharedPreferenceUtil {
         }
     }
 
-    fun saveWeatherProviderPref(weatherProvider: String) {
+    fun saveWeatherProviderPref(weatherProvider: String?) {
         sharedPreferenceEditor?.putString(getKey(WEATHER_PROVIDER_KEY), weatherProvider)
         sharedPreferenceEditor?.apply()
     }

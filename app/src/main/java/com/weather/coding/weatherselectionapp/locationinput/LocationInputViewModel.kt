@@ -11,6 +11,7 @@ import com.weather.coding.weatherselectionapp.networkcalls.NetworkRequests
 import com.weather.coding.weatherselectionapp.networkcalls.PeriodicNotificationService
 
 class LocationInputViewModel: ViewModel(), NetworkRequests.NetworkCallListener<OpenWeatherModel.LocationWeatherDTO> {
+
     var mLocationWeatherDTO: MutableLiveData<OpenWeatherModel.LocationWeatherDTO>? = null
 
     fun getOpenWeatherData(): MutableLiveData<OpenWeatherModel.LocationWeatherDTO> {
@@ -35,6 +36,10 @@ class LocationInputViewModel: ViewModel(), NetworkRequests.NetworkCallListener<O
         val pendingIntent = PendingIntent.getBroadcast(applicationContext, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager: AlarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         //TODO change 30000 to one day interval
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 30000, pendingIntent)
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent)
+    }
+
+    fun getDarkSkyInformation(latitude: Double, longitude: Double) {
+        NetworkRequests().getDarkSkyInformation(latitude, longitude, this)
     }
 }

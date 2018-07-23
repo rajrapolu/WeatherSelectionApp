@@ -39,4 +39,5 @@ dependencies {
     androidExtensions {
         experimental = true
     }
+    implementation "com.google.android.gms:play-services-places:15.0.1"
 }
