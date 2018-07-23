@@ -6,12 +6,18 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.content.Intent
+import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.OpenWeatherModel
 import com.weather.coding.weatherselectionapp.networkcalls.NetworkRequests
 import com.weather.coding.weatherselectionapp.networkcalls.PeriodicNotificationService
 
-class LocationInputViewModel: ViewModel(), NetworkRequests.NetworkCallListener<OpenWeatherModel.LocationWeatherDTO> {
+class LocationInputViewModel: ViewModel(), NetworkRequests.NetworkCallListener<CurrentWeatherDTO> {
 
+    override fun onSuccess(model: CurrentWeatherDTO?) {
+        mCurrentWeatherDTO?.value = model
+    }
+
+    var mCurrentWeatherDTO: MutableLiveData<CurrentWeatherDTO>? = null
     var mLocationWeatherDTO: MutableLiveData<OpenWeatherModel.LocationWeatherDTO>? = null
 
     fun getOpenWeatherData(): MutableLiveData<OpenWeatherModel.LocationWeatherDTO> {
@@ -19,8 +25,9 @@ class LocationInputViewModel: ViewModel(), NetworkRequests.NetworkCallListener<O
         return mLocationWeatherDTO as MutableLiveData<OpenWeatherModel.LocationWeatherDTO>
     }
 
-    override fun onSuccess(model: OpenWeatherModel.LocationWeatherDTO?) {
-        mLocationWeatherDTO?.value = model
+    fun getCurrentWeatherData(): MutableLiveData<CurrentWeatherDTO> {
+        if (mCurrentWeatherDTO == null) mCurrentWeatherDTO = MutableLiveData()
+        return mCurrentWeatherDTO as MutableLiveData<CurrentWeatherDTO>
     }
 
     override fun onFailure() {

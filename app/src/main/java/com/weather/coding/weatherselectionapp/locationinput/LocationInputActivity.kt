@@ -6,14 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.places.Places
 import com.google.android.gms.location.places.ui.PlacePicker
-import com.weather.coding.weatherselectionapp.OpenWeatherModel
+import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.R
 import com.weather.coding.weatherselectionapp.Util.NotificationUtil
 import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
@@ -104,15 +103,14 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
      * Observes changes to the mLocationInputViewModel
      */
     private fun startObserving() {
-        val locationWeatherObserver: Observer<OpenWeatherModel.LocationWeatherDTO> = Observer { locationWeather -> populateUI(locationWeather) }
-        mLocationInputViewModel.getOpenWeatherData().observe(this, locationWeatherObserver)
+        val locationWeatherObserver: Observer<CurrentWeatherDTO> = Observer { locationWeather -> populateUI(locationWeather) }
+        mLocationInputViewModel.getCurrentWeatherData().observe(this, locationWeatherObserver)
     }
 
-    private fun populateUI(locationWeather: OpenWeatherModel.LocationWeatherDTO?) {
+    private fun populateUI(currentWeather: CurrentWeatherDTO?) {
         location_input_progress_bar.visibility = View.GONE
-        if (locationWeather != null) {
-            Toast.makeText(this, locationWeather.city.name, Toast.LENGTH_LONG).show()
-            CurrentWeatherActivity.newInstance(this, locationWeather)
+        if (currentWeather != null) {
+            CurrentWeatherActivity.newInstance(this, currentWeather)
         } else {
             Toast.makeText(this, "Enter valid city", Toast.LENGTH_LONG).show()
         }

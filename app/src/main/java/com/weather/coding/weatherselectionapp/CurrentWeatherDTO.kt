@@ -1,3 +1,7 @@
 package com.weather.coding.weatherselectionapp
 
-data class CurrentWeatherDTO(val currentTemp: Double, val location: Double, val windSpeed: Double)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class CurrentWeatherDTO(val currentTemp: Double, val location: String, val windSpeed: Double): Parcelable

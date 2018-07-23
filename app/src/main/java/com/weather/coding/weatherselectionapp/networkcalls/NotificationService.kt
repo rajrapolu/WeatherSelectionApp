@@ -3,15 +3,20 @@ package com.weather.coding.weatherselectionapp.networkcalls
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.Util.NotificationUtil
 import com.weather.coding.weatherselectionapp.OpenWeatherModel
 
-class NotificationService: Service(), NetworkRequests.NetworkCallListener<OpenWeatherModel.LocationWeatherDTO> {
-
-    override fun onSuccess(model: OpenWeatherModel.LocationWeatherDTO?) {
-        NotificationUtil.createNotification(applicationContext, model)
-        stopSelf()
+class NotificationService: Service(), NetworkRequests.NetworkCallListener<CurrentWeatherDTO> {
+    override fun onSuccess(model: CurrentWeatherDTO?) {
+//        NotificationUtil.createNotification(applicationContext, model)
+//        stopSelf()
     }
+
+//    override fun onSuccess(model: OpenWeatherModel.LocationWeatherDTO?) {
+//        NotificationUtil.createNotification(applicationContext, model)
+//        stopSelf()
+//    }
 
     override fun onFailure() {
         stopSelf()

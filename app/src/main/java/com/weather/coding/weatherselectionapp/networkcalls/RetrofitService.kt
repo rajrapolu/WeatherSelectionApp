@@ -7,7 +7,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitService {
     private var mWeatherService: WeatherService? = null
-    private val openWeatherBaseUrl: String = "http://api.openweathermap.org/"
 
     private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         this.level = HttpLoggingInterceptor.Level.BODY
@@ -17,9 +16,9 @@ class RetrofitService {
         this.addInterceptor(interceptor)
     }.build()
 
-    public fun getWeatherService(): WeatherService? {
+    fun getWeatherService(baseUrl: String): WeatherService? {
         mWeatherService = Retrofit.Builder()
-                .baseUrl(openWeatherBaseUrl)
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()
