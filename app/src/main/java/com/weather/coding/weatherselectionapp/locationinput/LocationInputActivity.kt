@@ -60,19 +60,6 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
         location_continue.setOnClickListener { _ -> onButtonClicked() }
     }
 
-//    private fun configureWeatherProvider() {
-//        weatherProviderName = SharedPreferenceUtil.getInstance(applicationContext).getSavedWeatherProvider()
-//        if (weatherProviderName != null) {
-//            if (weatherProviderName == WeatherProviders.DARK_SKY.name) {
-//                setUpDarkSkyUI()
-//            } else if (weatherProviderName == WeatherProviders.OPEN_WEATHER.name) {
-//                setUpOpenWeatherUI()
-//            } else if (weatherProviderName == WeatherProviders.FIVE_DAY_WEATHER.name) {
-//                setUpFiveDayWeatherUI()
-//            }
-//        }
-//    }
-
     private fun configureWeatherProviderUI() {
         weatherProviderName = SharedPreferenceUtil.getInstance(applicationContext).getSavedWeatherProvider()
         if (weatherProviderName != null) {
@@ -95,25 +82,6 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
             location_continue.text = "Select place"
         }
     }
-
-//    private fun setUpFiveDayWeatherUI() {
-//        location_continue.visibility = View.VISIBLE
-//        location_city_name.visibility = View.VISIBLE
-//        location_country_name.visibility = View.GONE
-//    }
-//
-//    private fun setUpDarkSkyUI() {
-//        location_continue.text = "Select place"
-//        location_continue.visibility = View.VISIBLE
-//        location_city_name.visibility = View.GONE
-//        location_country_name.visibility = View.GONE
-//    }
-//
-//    private fun setUpOpenWeatherUI() {
-//        location_continue.visibility = View.VISIBLE
-//        location_city_name.visibility = View.VISIBLE
-//        location_country_name.visibility = View.VISIBLE
-//    }
 
     private fun openPlacePicker() {
         val placePickerBuilder = PlacePicker.IntentBuilder()
@@ -157,8 +125,7 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
             val cityName = location_city_name?.text?.toString()
             val countryName = location_country_name?.text?.toString()
             if (cityName != null && countryName != null) {
-                val sharedPreferenceUtil = SharedPreferenceUtil.getInstance(applicationContext)
-                sharedPreferenceUtil.saveLocationPref(cityName, countryName)
+                mLocationInputViewModel.saveLocationData(applicationContext, cityName, countryName)
                 mLocationInputViewModel.getOpenWeatherInformation(location_city_name.text.toString(), location_country_name.text.toString())
             } else {
                 Toast.makeText(this, "Please enter valid city and country name", Toast.LENGTH_LONG).show()
@@ -167,9 +134,17 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
             location_input_progress_bar.visibility = View.VISIBLE
             val cityName = location_city_name?.text?.toString()
             if (cityName != null) {
-                val sharedPreferenceUtil = SharedPreferenceUtil.getInstance(applicationContext)
-                sharedPreferenceUtil.saveLocationPref(cityName, "")
+                mLocationInputViewModel.saveLocationData(applicationContext, cityName, "")
                 mLocationInputViewModel.getFiveDayWeatherInformation(cityName)
+            } else {
+                Toast.makeText(this, "Please enter valid city name", Toast.LENGTH_LONG).show()
+            }
+        } else if (weatherProviderName == WeatherProviders.WEATHER_BIT.name) {
+            location_input_progress_bar.visibility = View.VISIBLE
+            val cityName = location_city_name?.text?.toString()
+            if (cityName != null) {
+                mLocationInputViewModel.saveLocationData(applicationContext, cityName, "")
+                mLocationInputViewModel.getWeatherBitInformation(cityName)
             } else {
                 Toast.makeText(this, "Please enter valid city name", Toast.LENGTH_LONG).show()
             }

@@ -12,5 +12,5 @@ enum class WeatherProviders {
 //    DARK_SKY("Dark Sky API", "https://api.darksky.net/", "0a3f349616016d5a625219e7256d6452"),
 //    FIVE_DAY_WEATHER("5DayWeather", "https://5dayweather.org/", "")
 
-        OPEN_WEATHER, DARK_SKY, FIVE_DAY_WEATHER
+        OPEN_WEATHER, DARK_SKY, FIVE_DAY_WEATHER, WEATHER_BIT
 }

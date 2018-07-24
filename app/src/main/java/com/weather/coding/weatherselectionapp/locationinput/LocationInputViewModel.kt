@@ -7,11 +7,12 @@ import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.content.Intent
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
+import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
 import com.weather.coding.weatherselectionapp.dataobjects.OpenWeatherModel
 import com.weather.coding.weatherselectionapp.networkcalls.NetworkRequests
 import com.weather.coding.weatherselectionapp.networkcalls.PeriodicNotificationService
 
-class LocationInputViewModel: ViewModel(), NetworkRequests.NetworkCallListener<CurrentWeatherDTO> {
+class LocationInputViewModel : ViewModel(), NetworkRequests.NetworkCallListener<CurrentWeatherDTO> {
 
     override fun onSuccess(model: CurrentWeatherDTO?) {
         mCurrentWeatherDTO?.value = model
@@ -52,5 +53,14 @@ class LocationInputViewModel: ViewModel(), NetworkRequests.NetworkCallListener<C
 
     fun getFiveDayWeatherInformation(cityName: String) {
         NetworkRequests().getFiveDayWeatherInformation(cityName, this)
+    }
+
+    fun getWeatherBitInformation(cityName: String) {
+        NetworkRequests().getWeatherBitInformation(cityName, this)
+    }
+
+    fun saveLocationData(applicationContext: Context, cityName: String, countryName: String) {
+        val sharedPreferenceUtil = SharedPreferenceUtil.getInstance(applicationContext)
+        sharedPreferenceUtil.saveLocationPref(cityName, countryName)
     }
 }

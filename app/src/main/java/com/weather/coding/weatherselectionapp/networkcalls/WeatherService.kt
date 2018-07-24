@@ -3,6 +3,7 @@ package com.weather.coding.weatherselectionapp.networkcalls
 import com.weather.coding.weatherselectionapp.dataobjects.DarkSkyModel
 import com.weather.coding.weatherselectionapp.dataobjects.FiveDayWeatherModel
 import com.weather.coding.weatherselectionapp.dataobjects.OpenWeatherModel
+import com.weather.coding.weatherselectionapp.dataobjects.WeatherBitModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.http.GET
@@ -19,4 +20,7 @@ interface WeatherService {
 
     @GET("api.php")
     fun getFiveDayWeatherData(@Query("city") cityName: String): Call<FiveDayWeatherModel.FiveDayWeatherDataDTO>
+
+    @GET("v2.0/current")
+    fun getWeatherBitData(@Query("city") cityName: String, @Query("units") units: String, @Query("key") apiKey: String): Call<WeatherBitModel.WeatherBitDTO>
 }

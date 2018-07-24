@@ -9,6 +9,7 @@ class WeatherProviderFactory {
             WeatherProviders.OPEN_WEATHER.name -> return OpenWeatherProvider()
             WeatherProviders.DARK_SKY.name -> return DarkSkyProvider()
             WeatherProviders.FIVE_DAY_WEATHER.name -> return FiveDayWeatherProvider()
+            WeatherProviders.WEATHER_BIT.name -> return WeatherBitProvider()
             else -> return OpenWeatherProvider()
         }
     }
