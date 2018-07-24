@@ -16,6 +16,7 @@ import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.R
 import com.weather.coding.weatherselectionapp.Util.NotificationUtil
 import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
+import com.weather.coding.weatherselectionapp.WeatherProviders
 import com.weather.coding.weatherselectionapp.currentweather.CurrentWeatherActivity
 import com.weather.coding.weatherselectionapp.weatherprovider.WeatherProviderSelectionActivity
 import kotlinx.android.synthetic.main.activity_location_input.*
@@ -61,9 +62,9 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
     private fun configureWeatherProvider() {
         weatherProvider = SharedPreferenceUtil.getInstance(applicationContext).getSavedWeatherProvider()
         if (weatherProvider != null) {
-            if (weatherProvider.equals(WeatherProviderSelectionActivity.WeatherProvider.DARK_SKY.name)) {
+            if (weatherProvider.equals(WeatherProviders.DARK_SKY.name)) {
                 setUpDarkSkyUI()
-            } else if (weatherProvider.equals(WeatherProviderSelectionActivity.WeatherProvider.OPEN_WEATHER.name)) {
+            } else if (weatherProvider.equals(WeatherProviders.OPEN_WEATHER.name)) {
                 setUpOpenWeatherUI()
             }
         }
@@ -117,7 +118,7 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
     }
 
     private fun onButtonClicked() {
-        if (weatherProvider.equals(WeatherProviderSelectionActivity.WeatherProvider.DARK_SKY.name)) {
+        if (weatherProvider.equals(WeatherProviders.DARK_SKY.name)) {
             openPlacePicker()
         } else {
             location_input_progress_bar.visibility = View.VISIBLE

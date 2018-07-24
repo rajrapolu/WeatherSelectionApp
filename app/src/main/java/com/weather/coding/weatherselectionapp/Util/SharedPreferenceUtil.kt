@@ -24,7 +24,7 @@ class SharedPreferenceUtil {
         }
     }
 
-    fun getKey(attributeKey: String): String {
+    private fun getKey(attributeKey: String): String {
         return SHARED_PREF_NAME + "_" + attributeKey
     }
 
