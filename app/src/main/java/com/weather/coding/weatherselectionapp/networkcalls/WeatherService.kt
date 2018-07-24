@@ -1,13 +1,13 @@
 package com.weather.coding.weatherselectionapp.networkcalls
 
-import com.weather.coding.weatherselectionapp.DarkSkyModel
-import com.weather.coding.weatherselectionapp.OpenWeatherModel
-import org.json.JSONObject
+import com.weather.coding.weatherselectionapp.dataobjects.DarkSkyModel
+import com.weather.coding.weatherselectionapp.dataobjects.FiveDayWeatherModel
+import com.weather.coding.weatherselectionapp.dataobjects.OpenWeatherModel
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import retrofit2.http.Url
 
 interface WeatherService {
 
@@ -16,4 +16,7 @@ interface WeatherService {
 
     @GET("forecast/{apiKey}/{latitude},{longitude}")
     fun getDarkSkyData(@Path("apiKey") apiKey: String, @Path("latitude") latitude: Double, @Path("longitude") longitude: Double): Call<DarkSkyModel.DarkSkyDTO>
+
+    @GET("api.php")
+    fun getFiveDayWeatherData(@Query("city") cityName: String): Call<FiveDayWeatherModel.FiveDayWeatherDataDTO>
 }

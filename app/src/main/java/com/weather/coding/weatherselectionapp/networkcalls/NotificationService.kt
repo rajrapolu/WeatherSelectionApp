@@ -4,8 +4,6 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
-import com.weather.coding.weatherselectionapp.Util.NotificationUtil
-import com.weather.coding.weatherselectionapp.OpenWeatherModel
 
 class NotificationService: Service(), NetworkRequests.NetworkCallListener<CurrentWeatherDTO> {
     override fun onSuccess(model: CurrentWeatherDTO?) {

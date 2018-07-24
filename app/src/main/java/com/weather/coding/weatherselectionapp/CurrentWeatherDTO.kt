@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class CurrentWeatherDTO(val currentTemp: Double, val location: String, val windSpeed: Double?, val windDirection: Double?, val minTemp: Double?, val maxTemp: Double?): Parcelable
+data class CurrentWeatherDTO(val currentTemp: String, val location: String, val windSpeed: String?, val windDirection: String?, val minTemp: String?, val maxTemp: String?): Parcelable

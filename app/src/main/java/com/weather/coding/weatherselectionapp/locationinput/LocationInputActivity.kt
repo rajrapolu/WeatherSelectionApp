@@ -14,11 +14,12 @@ import com.google.android.gms.location.places.Places
 import com.google.android.gms.location.places.ui.PlacePicker
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.R
+import com.weather.coding.weatherselectionapp.RequiredFields
 import com.weather.coding.weatherselectionapp.Util.NotificationUtil
 import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
 import com.weather.coding.weatherselectionapp.WeatherProviders
 import com.weather.coding.weatherselectionapp.currentweather.CurrentWeatherActivity
-import com.weather.coding.weatherselectionapp.weatherprovider.WeatherProviderSelectionActivity
+import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
 import kotlinx.android.synthetic.main.activity_location_input.*
 
 private const val PLACE_PICKER_REQUEST: Int = 99
@@ -37,7 +38,7 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
     }
 
     private lateinit var mLocationInputViewModel: LocationInputViewModel
-    private var weatherProvider: String? = null
+    private var weatherProviderName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,36 +53,67 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
         startObserving()
         NotificationUtil.createNotificationChannel(applicationContext)
 
-        configureWeatherProvider()
+        configureWeatherProviderUI()
 
         createPeriodicWeatherFetchCall()
 
         location_continue.setOnClickListener { _ -> onButtonClicked() }
     }
 
-    private fun configureWeatherProvider() {
-        weatherProvider = SharedPreferenceUtil.getInstance(applicationContext).getSavedWeatherProvider()
-        if (weatherProvider != null) {
-            if (weatherProvider.equals(WeatherProviders.DARK_SKY.name)) {
-                setUpDarkSkyUI()
-            } else if (weatherProvider.equals(WeatherProviders.OPEN_WEATHER.name)) {
-                setUpOpenWeatherUI()
-            }
+//    private fun configureWeatherProvider() {
+//        weatherProviderName = SharedPreferenceUtil.getInstance(applicationContext).getSavedWeatherProvider()
+//        if (weatherProviderName != null) {
+//            if (weatherProviderName == WeatherProviders.DARK_SKY.name) {
+//                setUpDarkSkyUI()
+//            } else if (weatherProviderName == WeatherProviders.OPEN_WEATHER.name) {
+//                setUpOpenWeatherUI()
+//            } else if (weatherProviderName == WeatherProviders.FIVE_DAY_WEATHER.name) {
+//                setUpFiveDayWeatherUI()
+//            }
+//        }
+//    }
+
+    private fun configureWeatherProviderUI() {
+        weatherProviderName = SharedPreferenceUtil.getInstance(applicationContext).getSavedWeatherProvider()
+        if (weatherProviderName != null) {
+            val weatherProvider = WeatherProviderFactory().getWeatherProvider(weatherProviderName!!)
+            val fieldsRequired: RequiredFields = weatherProvider.fieldsRequired
+            configureUIBasedOnRequiredField(fieldsRequired)
         }
     }
 
-    private fun setUpDarkSkyUI() {
-        location_continue.text = "Select place"
-        location_continue.visibility = View.VISIBLE
-        location_city_name.visibility = View.GONE
-        location_country_name.visibility = View.GONE
+    private fun configureUIBasedOnRequiredField(fieldsRequired: RequiredFields) {
+        if (fieldsRequired == RequiredFields.CITY_COUNTRY_NAME) {
+            location_city_name.visibility = View.VISIBLE
+            location_country_name.visibility = View.VISIBLE
+        } else if (fieldsRequired == RequiredFields.CITY_NAME) {
+            location_city_name.visibility = View.VISIBLE
+            location_country_name.visibility = View.GONE
+        } else if (fieldsRequired == RequiredFields.LAT_LNG) {
+            location_city_name.visibility = View.GONE
+            location_country_name.visibility = View.GONE
+            location_continue.text = "Select place"
+        }
     }
 
-    private fun setUpOpenWeatherUI() {
-        location_continue.visibility = View.VISIBLE
-        location_city_name.visibility = View.VISIBLE
-        location_country_name.visibility = View.VISIBLE
-    }
+//    private fun setUpFiveDayWeatherUI() {
+//        location_continue.visibility = View.VISIBLE
+//        location_city_name.visibility = View.VISIBLE
+//        location_country_name.visibility = View.GONE
+//    }
+//
+//    private fun setUpDarkSkyUI() {
+//        location_continue.text = "Select place"
+//        location_continue.visibility = View.VISIBLE
+//        location_city_name.visibility = View.GONE
+//        location_country_name.visibility = View.GONE
+//    }
+//
+//    private fun setUpOpenWeatherUI() {
+//        location_continue.visibility = View.VISIBLE
+//        location_city_name.visibility = View.VISIBLE
+//        location_country_name.visibility = View.VISIBLE
+//    }
 
     private fun openPlacePicker() {
         val placePickerBuilder = PlacePicker.IntentBuilder()
@@ -118,9 +150,9 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
     }
 
     private fun onButtonClicked() {
-        if (weatherProvider.equals(WeatherProviders.DARK_SKY.name)) {
+        if (weatherProviderName == WeatherProviders.DARK_SKY.name) {
             openPlacePicker()
-        } else {
+        } else if (weatherProviderName == WeatherProviders.OPEN_WEATHER.name) {
             location_input_progress_bar.visibility = View.VISIBLE
             val cityName = location_city_name?.text?.toString()
             val countryName = location_country_name?.text?.toString()
@@ -130,6 +162,16 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
                 mLocationInputViewModel.getOpenWeatherInformation(location_city_name.text.toString(), location_country_name.text.toString())
             } else {
                 Toast.makeText(this, "Please enter valid city and country name", Toast.LENGTH_LONG).show()
+            }
+        } else if (weatherProviderName == WeatherProviders.FIVE_DAY_WEATHER.name) {
+            location_input_progress_bar.visibility = View.VISIBLE
+            val cityName = location_city_name?.text?.toString()
+            if (cityName != null) {
+                val sharedPreferenceUtil = SharedPreferenceUtil.getInstance(applicationContext)
+                sharedPreferenceUtil.saveLocationPref(cityName, "")
+                mLocationInputViewModel.getFiveDayWeatherInformation(cityName)
+            } else {
+                Toast.makeText(this, "Please enter valid city name", Toast.LENGTH_LONG).show()
             }
         }
     }

@@ -2,10 +2,12 @@ package com.weather.coding.weatherselectionapp.networkcalls
 
 import android.util.Log
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
-import com.weather.coding.weatherselectionapp.DarkSkyModel
-import com.weather.coding.weatherselectionapp.OpenWeatherModel
+import com.weather.coding.weatherselectionapp.dataobjects.DarkSkyModel
+import com.weather.coding.weatherselectionapp.dataobjects.OpenWeatherModel
 import com.weather.coding.weatherselectionapp.Util.ModelConversionUtil
 import com.weather.coding.weatherselectionapp.WeatherProviders
+import com.weather.coding.weatherselectionapp.dataobjects.FiveDayWeatherModel
+import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,8 +20,9 @@ class NetworkRequests {
     }
 
     fun getOpenWeatherInformation(cityName: String, countryName: String, listener: NetworkCallListener<CurrentWeatherDTO>) {
-        RetrofitService().getWeatherService(WeatherProviders.OPEN_WEATHER.baseURL)
-                ?.getOpenWeatherData("$cityName,$countryName", "imperial", WeatherProviders.OPEN_WEATHER.apiKey)
+        val weatherProvider = WeatherProviderFactory().getWeatherProvider(WeatherProviders.OPEN_WEATHER.name)
+        RetrofitService().getWeatherService(weatherProvider.baseURL)
+                ?.getOpenWeatherData("$cityName,$countryName", "imperial", weatherProvider.apiKey)
                 ?.enqueue(object : Callback<OpenWeatherModel.LocationWeatherDTO> {
                     override fun onFailure(call: Call<OpenWeatherModel.LocationWeatherDTO>?, t: Throwable?) {
                         Log.i("verifyingObject", "failed" + t.toString())
@@ -38,8 +41,9 @@ class NetworkRequests {
     }
 
     fun getDarkSkyInformation(latitude: Double, longitude: Double, listener: NetworkCallListener<CurrentWeatherDTO>) {
-        RetrofitService().getWeatherService(WeatherProviders.DARK_SKY.baseURL)
-                ?.getDarkSkyData(WeatherProviders.DARK_SKY.apiKey, latitude, longitude)
+        val weatherProvider = WeatherProviderFactory().getWeatherProvider(WeatherProviders.DARK_SKY.name)
+        RetrofitService().getWeatherService(weatherProvider.baseURL)
+                ?.getDarkSkyData(weatherProvider.apiKey, latitude, longitude)
                 ?.enqueue(object : Callback<DarkSkyModel.DarkSkyDTO> {
                     override fun onFailure(call: Call<DarkSkyModel.DarkSkyDTO>?, t: Throwable?) {
 
@@ -53,6 +57,27 @@ class NetworkRequests {
                             listener.onSuccess(ModelConversionUtil.convertDarkSkyDTO(darkSkyDTO))
                         }
                     }
+                })
+    }
+
+    fun getFiveDayWeatherInformation(cityName: String, listener: NetworkCallListener<CurrentWeatherDTO>) {
+        val weatherProvider = WeatherProviderFactory().getWeatherProvider(WeatherProviders.FIVE_DAY_WEATHER.name)
+        RetrofitService().getWeatherService(weatherProvider.baseURL)
+                ?.getFiveDayWeatherData(cityName)
+                ?.enqueue(object : Callback<FiveDayWeatherModel.FiveDayWeatherDataDTO> {
+                    override fun onFailure(call: Call<FiveDayWeatherModel.FiveDayWeatherDataDTO>?, t: Throwable?) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onResponse(call: Call<FiveDayWeatherModel.FiveDayWeatherDataDTO>?, response: Response<FiveDayWeatherModel.FiveDayWeatherDataDTO>?) {
+                        if (response?.body() == null) {
+                            listener.onSuccess(null)
+                        } else {
+                            val fiveDayWeatherDTO = response.body() as FiveDayWeatherModel.FiveDayWeatherDataDTO
+                            listener.onSuccess(ModelConversionUtil.convertFiveDayWeatherDTO(fiveDayWeatherDTO))
+                        }
+                    }
+
                 })
     }
 }

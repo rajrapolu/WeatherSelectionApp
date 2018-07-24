@@ -7,7 +7,7 @@ import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.content.Intent
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
-import com.weather.coding.weatherselectionapp.OpenWeatherModel
+import com.weather.coding.weatherselectionapp.dataobjects.OpenWeatherModel
 import com.weather.coding.weatherselectionapp.networkcalls.NetworkRequests
 import com.weather.coding.weatherselectionapp.networkcalls.PeriodicNotificationService
 
@@ -48,5 +48,9 @@ class LocationInputViewModel: ViewModel(), NetworkRequests.NetworkCallListener<C
 
     fun getDarkSkyInformation(latitude: Double, longitude: Double) {
         NetworkRequests().getDarkSkyInformation(latitude, longitude, this)
+    }
+
+    fun getFiveDayWeatherInformation(cityName: String) {
+        NetworkRequests().getFiveDayWeatherInformation(cityName, this)
     }
 }
