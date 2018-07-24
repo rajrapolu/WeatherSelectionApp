@@ -1,4 +1,4 @@
-package com.weather.coding.weatherselectionapp
+package com.weather.coding.weatherselectionapp.dataobjects
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

@@ -8,6 +8,7 @@
     <string name="notification_text">Temp is %1$s%2$s at %3$s</string>
     <string name="current_weather_min_label">Min Temp: %1$s%2$s</string>
     <string name="current_weather_max_label">Max Temp: %1$s%2$s</string>
-    <string name="current_weather_wind_label">Wind: %1$s %2$s, %3$s %4$s</string>
+    <string name="current_weather_wind_label">Wind: %1$s %2$s</string>
     <string name="current_temp_label">%1$s%2$s</string>
+    <string name="weather_provider_continue_label">Continue</string>
 </resources>

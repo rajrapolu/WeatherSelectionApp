@@ -15,11 +15,6 @@
         <activity
             android:name=".locationinput.LocationInputActivity"
             android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <receiver
@@ -30,7 +25,18 @@
             android:name=".networkcalls.NotificationService"
             android:exported="false" />
 
-        <activity android:name=".currentweather.CurrentWeatherActivity"></activity>
+        <activity android:name=".currentweather.CurrentWeatherActivity" />
+        <activity android:name=".weatherprovider.WeatherProviderSelectionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAgvIKu7oIVLGIRJub81Rdzc5i8EDUYmi8"/>
     </application>
 
 </manifest>

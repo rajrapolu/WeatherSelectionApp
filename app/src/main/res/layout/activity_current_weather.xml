@@ -68,6 +68,8 @@
         android:layout_marginStart="@dimen/default_margin_padding"
         android:layout_marginTop="@dimen/current_weather_min_max_size"
         android:textSize="@dimen/default_text_size"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/current_weather_temp_value"
         tools:text="Min Temp:" />
@@ -79,6 +81,8 @@
         android:layout_marginStart="@dimen/default_margin_padding"
         android:layout_marginTop="@dimen/half_default_margin_padding"
         android:textSize="@dimen/default_text_size"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/current_weather_min_temp"
         tools:text="Max Temp:" />
@@ -89,6 +93,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin_padding"
         android:textSize="@dimen/default_text_size"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/current_weather_temp_value"
         app:layout_constraintStart_toEndOf="@+id/current_weather_temp_value"
         app:layout_constraintTop_toTopOf="@+id/current_weather_temp_value"
