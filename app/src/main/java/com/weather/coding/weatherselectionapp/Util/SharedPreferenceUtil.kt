@@ -8,7 +8,10 @@ import kotlin.collections.LinkedHashSet
 private const val SHARED_PREF_NAME = "com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil"
 private const val CITY_NAME = "CITY_NAME_KEY"
 private const val COUNTRY_NAME = "COUNTRY_NAME_KEY"
+private const val LAT_KEY = "LAT_KEY"
+private const val LNG_KEY = "LNG_KEY"
 private const val WEATHER_PROVIDER_KEY = "WEATHER_PROVIDER_KEY"
+private const val PERIODIC_CALL_SETUP = "PERIODIC_CALL_SETUP"
 
 class SharedPreferenceUtil {
     companion object {
@@ -36,9 +39,26 @@ class SharedPreferenceUtil {
         }
     }
 
+    fun saveLocationLatLngPref(latitude: Double?, longitude: Double?) {
+        if (latitude != null && longitude != null) {
+            sharedPreferenceEditor?.putFloat(getKey(LAT_KEY), latitude.toFloat())
+            sharedPreferenceEditor?.putFloat(getKey(LNG_KEY), longitude.toFloat())
+            sharedPreferenceEditor?.apply()
+        }
+    }
+
     fun saveWeatherProviderPref(weatherProvider: String?) {
         sharedPreferenceEditor?.putString(getKey(WEATHER_PROVIDER_KEY), weatherProvider)
         sharedPreferenceEditor?.apply()
+    }
+
+    fun savePeriodicCallSetUp() {
+        sharedPreferenceEditor?.putBoolean(getKey(PERIODIC_CALL_SETUP), true)
+        sharedPreferenceEditor?.apply()
+    }
+
+    fun didPeriodicCallSetUpDone(): Boolean? {
+        return sharedPreferences?.getBoolean(getKey(PERIODIC_CALL_SETUP), false)
     }
 
     fun getSavedCityName(): String? {
@@ -51,6 +71,22 @@ class SharedPreferenceUtil {
 
     fun getSavedWeatherProvider(): String? {
         return sharedPreferences?.getString(getKey(WEATHER_PROVIDER_KEY), null)
+    }
+
+    fun getSavedLatitude(): Double? {
+        val latValue = sharedPreferences?.getFloat(getKey(LAT_KEY), 0F)
+        if (latValue == 0F) {
+            return null
+        }
+        return latValue?.toDouble()
+    }
+
+    fun getSavedLongitude(): Double? {
+        val lngValue = sharedPreferences?.getFloat(getKey(LNG_KEY), 0F)
+        if (lngValue == 0F) {
+            return null
+        }
+        return lngValue?.toDouble()
     }
 
     fun clearSavedLocation() {

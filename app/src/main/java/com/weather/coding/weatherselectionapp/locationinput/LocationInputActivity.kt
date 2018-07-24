@@ -54,9 +54,6 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
         NotificationUtil.createNotificationChannel(applicationContext)
 
         configureWeatherProviderUI()
-
-        createPeriodicWeatherFetchCall()
-
         location_continue.setOnClickListener { _ -> onButtonClicked() }
     }
 
@@ -79,7 +76,7 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
         } else if (fieldsRequired == RequiredFields.LAT_LNG) {
             location_city_name.visibility = View.GONE
             location_country_name.visibility = View.GONE
-            location_continue.text = "Select place"
+            location_continue.text = getString(R.string.lat_lng_provider_button_label)
         }
     }
 
@@ -94,10 +91,6 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
                 .addApi(Places.GEO_DATA_API)
                 .build()
 
-    }
-
-    private fun createPeriodicWeatherFetchCall() {
-        mLocationInputViewModel.createPeriodicFetchCall(applicationContext)
     }
 
     /**
@@ -154,6 +147,9 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PLACE_PICKER_REQUEST && resultCode == RESULT_OK) {
             val place = PlacePicker.getPlace(this, data)
+            val latitude = place.latLng.latitude
+            val longitude = place.latLng.longitude
+            mLocationInputViewModel.saveLatLngData(applicationContext, latitude, longitude)
             mLocationInputViewModel.getDarkSkyInformation(place.latLng.latitude, place.latLng.longitude)
             Toast.makeText(this, place.latLng.latitude.toString() + " " + place.latLng.longitude.toString(), Toast.LENGTH_LONG).show()
         }

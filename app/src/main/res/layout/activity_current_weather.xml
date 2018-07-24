@@ -17,17 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/current_weather_edit_provider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin_padding"
-        android:layout_marginTop="@dimen/default_margin_padding"
-        android:src="@drawable/ic_edit_black"
-        app:layout_constraintBottom_toBottomOf="@+id/current_weather_provider"
-        app:layout_constraintStart_toEndOf="@+id/current_weather_provider"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/current_weather_city_country_label"
         android:layout_width="wrap_content"
@@ -38,17 +27,6 @@
         android:textSize="@dimen/city_country_label_text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/current_weather_provider" />
-
-    <ImageView
-        android:id="@+id/current_weather_edit_city"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/half_default_margin_padding"
-        android:layout_marginStart="@dimen/default_margin_padding"
-        android:src="@drawable/ic_edit_black"
-        app:layout_constraintBottom_toBottomOf="@+id/current_weather_city_country_label"
-        app:layout_constraintStart_toEndOf="@+id/current_weather_city_country_label"
-        app:layout_constraintTop_toTopOf="@+id/current_weather_city_country_label" />
 
     <TextView
         android:id="@+id/current_weather_temp_value"

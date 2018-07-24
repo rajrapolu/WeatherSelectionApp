@@ -39,14 +39,6 @@ class LocationInputViewModel : ViewModel(), NetworkRequests.NetworkCallListener<
         NetworkRequests().getOpenWeatherInformation(cityName, countryName, this)
     }
 
-    fun createPeriodicFetchCall(applicationContext: Context) {
-        val intent = Intent(applicationContext, PeriodicNotificationService::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(applicationContext, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val alarmManager: AlarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        //TODO change 30000 to one day interval
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent)
-    }
-
     fun getDarkSkyInformation(latitude: Double, longitude: Double) {
         NetworkRequests().getDarkSkyInformation(latitude, longitude, this)
     }
@@ -60,7 +52,10 @@ class LocationInputViewModel : ViewModel(), NetworkRequests.NetworkCallListener<
     }
 
     fun saveLocationData(applicationContext: Context, cityName: String, countryName: String) {
-        val sharedPreferenceUtil = SharedPreferenceUtil.getInstance(applicationContext)
-        sharedPreferenceUtil.saveLocationPref(cityName, countryName)
+        SharedPreferenceUtil.getInstance(applicationContext).saveLocationPref(cityName, countryName)
+    }
+
+    fun saveLatLngData(applicationContext: Context, latitude: Double, longitude: Double) {
+        SharedPreferenceUtil.getInstance(applicationContext).saveLocationLatLngPref(latitude, longitude)
     }
 }
