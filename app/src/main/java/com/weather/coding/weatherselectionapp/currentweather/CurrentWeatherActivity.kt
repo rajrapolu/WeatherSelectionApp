@@ -12,11 +12,10 @@ import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
 import com.weather.coding.weatherselectionapp.Util.UnitsUtil
 import kotlinx.android.synthetic.main.activity_current_weather.*
 
-private const val LOCATION_WEATHER_KEY: String = "LOCATION_WEATHER_KEY"
-
 class CurrentWeatherActivity : AppCompatActivity() {
 
     companion object {
+        const val LOCATION_WEATHER_KEY: String = "LOCATION_WEATHER_KEY"
         fun newInstance(context: Context, currentWeather: CurrentWeatherDTO) {
             val intent = Intent(context, CurrentWeatherActivity::class.java)
             intent.putExtra(LOCATION_WEATHER_KEY, currentWeather)

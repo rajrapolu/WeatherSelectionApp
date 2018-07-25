@@ -29,6 +29,7 @@ class WeatherProviderSelectionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_weather_provider_selection)
 
         mWeatherViewModel = ViewModelProviders.of(this).get(WeatherProviderSelectionViewModel::class.java)
+        createPeriodicWeatherFetchCall()
         createViewsForActivity()
     }
 
@@ -60,5 +61,9 @@ class WeatherProviderSelectionActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Please select one of the provider", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun createPeriodicWeatherFetchCall() {
+        mWeatherViewModel.createPeriodicFetchCall(applicationContext)
     }
 }
