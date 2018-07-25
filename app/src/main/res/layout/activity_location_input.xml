@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/default_margin_padding"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context=".locationinput.LocationInputActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/welcome_label"
+            android:textSize="@dimen/welcome_label_size" />
+
+        <EditText
+            android:id="@+id/location_city_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:layout_marginTop="@dimen/default_margin_padding"
+            android:hint="@string/city_name" />
+
+        <EditText
+            android:id="@+id/location_country_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:layout_marginTop="@dimen/default_margin_padding"
+            android:hint="@string/country_name" />
+
+        <Button
+            android:id="@+id/location_continue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/default_margin_padding"
+            android:text="@string/get_weather" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/location_input_progress_bar"
+        android:layout_width="@dimen/progress_bar_width_height"
+        android:layout_height="@dimen/progress_bar_width_height"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+</FrameLayout>
