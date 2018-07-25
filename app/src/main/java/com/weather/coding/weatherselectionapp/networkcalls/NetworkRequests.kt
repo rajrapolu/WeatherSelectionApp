@@ -30,12 +30,16 @@ class NetworkRequests {
                     }
 
                     override fun onResponse(call: Call<OpenWeatherModel.LocationWeatherDTO>?, response: Response<OpenWeatherModel.LocationWeatherDTO>?) {
-                        if (response?.body() == null) {
-                            listener.onSuccess(null)
+                        if (response != null && response.isSuccessful) {
+                            if (response.body() == null) {
+                                listener.onSuccess(null)
+                            } else {
+                                val locationWeatherDTO = response.body() as OpenWeatherModel.LocationWeatherDTO
+                                listener.onSuccess(ModelConversionUtil.convertOpenWeatherResponse(locationWeatherDTO))
+                                Log.i("verifyingObject", locationWeatherDTO.coordinates + " " + locationWeatherDTO.city.name)
+                            }
                         } else {
-                            val locationWeatherDTO = response.body() as OpenWeatherModel.LocationWeatherDTO
-                            listener.onSuccess(ModelConversionUtil.convertOpenWeatherResponse(locationWeatherDTO))
-                            Log.i("verifyingObject", locationWeatherDTO.coordinates + " " + locationWeatherDTO.city.name)
+                            listener.onSuccess(null)
                         }
                     }
                 })
