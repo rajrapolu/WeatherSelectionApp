@@ -122,6 +122,7 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
         window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         location_input_progress_bar.visibility = View.GONE
         if (currentWeather != null) {
+            mLocationInputViewModel.saveLocationData(applicationContext, location_city_name?.text?.toString(), location_country_name?.text?.toString())
             navigateToCurrentWeatherActivity(currentWeather)
         } else {
             Toast.makeText(this, getString(R.string.enter_valid_location_label), Toast.LENGTH_LONG).show()
@@ -146,7 +147,6 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
                     Toast.makeText(this, getString(R.string.button_permission_text), Toast.LENGTH_LONG).show()
                 }
             } else {
-                mLocationInputViewModel.saveLocationData(applicationContext, location_city_name?.text?.toString(), location_country_name?.text?.toString())
                 getWeatherInformation(location_city_name?.text?.toString(), location_country_name?.text?.toString(), null, null)
             }
         }
