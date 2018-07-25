@@ -3,6 +3,7 @@ package com.weather.coding.weatherselectionapp.Util
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -15,7 +16,7 @@ import com.weather.coding.weatherselectionapp.currentweather.CurrentWeatherActiv
 
 private const val CHANNEL_ID = "NOTIFICATION_CHANNEL"
 private const val NOTIFICATION_ID = 1
-private const val PENDING_INTENT_REQUEST_CODE = 999
+private const val PENDING_INTENT_REQUEST_CODE = 0
 
 class NotificationUtil {
 
@@ -43,8 +44,9 @@ class NotificationUtil {
         fun createNotification(applicationContext: Context, model: CurrentWeatherDTO) {
             val intent = Intent(applicationContext, CurrentWeatherActivity::class.java)
             intent.putExtra(ConstantsClass.LOCATION_WEATHER_KEY, model)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            val pendingIntent = PendingIntent.getActivity(applicationContext, PENDING_INTENT_REQUEST_CODE, intent, 0)
+            val taskStackBuilder = TaskStackBuilder.create(applicationContext)
+            taskStackBuilder.addNextIntentWithParentStack(intent)
+            val pendingIntent = taskStackBuilder.getPendingIntent(PENDING_INTENT_REQUEST_CODE, PendingIntent.FLAG_UPDATE_CURRENT)
             val notificationBuilder: NotificationCompat.Builder =
                     NotificationCompat.Builder(applicationContext, CHANNEL_ID)
                             .setSmallIcon(R.drawable.ic_beach_access_black)
