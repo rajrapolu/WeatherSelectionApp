@@ -3,7 +3,7 @@
     <string name="city_name">City Name</string>
     <string name="country_name">Country</string>
     <string name="get_weather">Get Weather</string>
-    <string name="welcome_label">Welcome! Enter City name and Country</string>
+    <string name="welcome_label">Welcome! Enter/Select Location</string>
     <string name="notification_title">New weather data available</string>
     <string name="notification_text">Temp is %1$s%2$s at %3$s</string>
     <string name="current_weather_min_label">Min Temp: %1$s%2$s</string>
@@ -18,4 +18,7 @@
     <string name="something_went_wrong">Something went wrong. Please select weather provider again</string>
     <string name="notification_channel_description">Subscribe to receive weather notifications</string>
     <string name="notification_channel_name">Weather Selection Channel</string>
+    <string name="button_permission_text">Location Permission required to pick a place</string>
+    <string name="permission_required_for_dark_sky">Permission is required to get weather data from Dark Sky Api</string>
+    <string name="select_a_weather_provider_label">Select a Weather Provider</string>
 </resources>
