@@ -1,9 +1,13 @@
 package com.weather.coding.weatherselectionapp.locationinput
 
+import android.Manifest
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
@@ -22,11 +26,13 @@ import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProv
 import kotlinx.android.synthetic.main.activity_location_input.*
 
 private const val PLACE_PICKER_REQUEST: Int = 99
+private const val LOCATION_PERMISSION_REQUEST_CODE: Int = 98
 
 class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
     private lateinit var mLocationInputViewModel: LocationInputViewModel
     private var weatherProviderName: String? = null
     private var typeOfUI: RequiredFields? = null
+    private var isPermissionGranted = false
 
     override fun onConnectionFailed(p0: ConnectionResult) {
         Toast.makeText(this, getString(R.string.google_play_connection_failed), Toast.LENGTH_LONG).show()
@@ -69,6 +75,25 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
             location_city_name.visibility = View.GONE
             location_country_name.visibility = View.GONE
             location_continue.text = getString(R.string.lat_lng_provider_button_label)
+            requestLocationPermission()
+        }
+    }
+
+    private fun requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+        } else {
+            isPermissionGranted = true
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                isPermissionGranted = true
+            } else {
+                Toast.makeText(this, getString(R.string.permission_required_for_dark_sky), Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -115,7 +140,11 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
     private fun onButtonClicked() {
         if (typeOfUI != null) {
             if (typeOfUI == RequiredFields.LAT_LNG) {
-                openPlacePicker()
+                if (isPermissionGranted) {
+                    openPlacePicker()
+                } else {
+                    Toast.makeText(this, getString(R.string.button_permission_text), Toast.LENGTH_LONG).show()
+                }
             } else {
                 mLocationInputViewModel.saveLocationData(applicationContext, location_city_name?.text?.toString(), location_country_name?.text?.toString())
                 getWeatherInformation(location_city_name?.text?.toString(), location_country_name?.text?.toString(), null, null)

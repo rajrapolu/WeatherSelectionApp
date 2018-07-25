@@ -41,6 +41,8 @@ class WeatherProviderSelectionActivity : AppCompatActivity() {
      * Create the radio group for weather provider and inflates button layout
      */
     private fun createViewsForActivity() {
+        val inflater: LayoutInflater = LayoutInflater.from(this)
+        inflater.inflate(R.layout.weather_provider_title_layout, weather_provider_root_view, true)
         val radioGroup = RadioGroup(this)
         for (weatherProviderKey in WeatherProviders.values()) {
             val weatherProvider = mWeatherViewModel.getWeatherProvider(weatherProviderKey.name)
@@ -65,7 +67,7 @@ class WeatherProviderSelectionActivity : AppCompatActivity() {
         }
 
         weather_provider_root_view.addView(radioGroup)
-        LayoutInflater.from(this).inflate(R.layout.weather_provider_continue_button_layout, weather_provider_root_view, true)
+        inflater.inflate(R.layout.weather_provider_continue_button_layout, weather_provider_root_view, true)
     }
 
     /**
