@@ -22,28 +22,31 @@ class DarkSkyProvider : WeatherProvider() {
 
     override fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<CurrentWeatherDTO>) {
         if (latitude != null && longitude != null) {
-            RetrofitService().getWeatherService(baseURL)
-                    ?.getDarkSkyData(apiKey, latitude, longitude)
-                    ?.enqueue(object : Callback<DarkSkyModel.DarkSkyDTO> {
-                        override fun onFailure(call: Call<DarkSkyModel.DarkSkyDTO>?, t: Throwable?) {
-                            listener.onFailure()
-                        }
+            getWeatherServiceEndPoint(latitude, longitude).enqueue(object : Callback<DarkSkyModel.DarkSkyDTO> {
+                override fun onFailure(call: Call<DarkSkyModel.DarkSkyDTO>?, t: Throwable?) {
+                    listener.onFailure()
+                }
 
-                        override fun onResponse(call: Call<DarkSkyModel.DarkSkyDTO>?, response: Response<DarkSkyModel.DarkSkyDTO>?) {
-                            if (response != null && response.isSuccessful) {
-                                if (response.body() == null) {
-                                    listener.onSuccess(null)
-                                } else {
-                                    val darkSkyDTO = response.body() as DarkSkyModel.DarkSkyDTO
-                                    listener.onSuccess(ModelConversionUtil.convertDarkSkyDTO(darkSkyDTO))
-                                }
-                            } else {
-                                listener.onFailure()
-                            }
+                override fun onResponse(call: Call<DarkSkyModel.DarkSkyDTO>?, response: Response<DarkSkyModel.DarkSkyDTO>?) {
+                    if (response != null && response.isSuccessful) {
+                        if (response.body() == null) {
+                            listener.onSuccess(null)
+                        } else {
+                            val darkSkyDTO = response.body() as DarkSkyModel.DarkSkyDTO
+                            listener.onSuccess(ModelConversionUtil.convertDarkSkyDTO(darkSkyDTO))
                         }
-                    })
+                    } else {
+                        listener.onFailure()
+                    }
+                }
+            })
         } else {
             listener.onFailure()
         }
+    }
+
+    fun getWeatherServiceEndPoint(latitude: Double, longitude: Double): Call<DarkSkyModel.DarkSkyDTO> {
+        return RetrofitService().getWeatherService(baseURL)
+                .getDarkSkyData(apiKey, latitude, longitude)
     }
 }

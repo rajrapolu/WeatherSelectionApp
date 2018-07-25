@@ -23,29 +23,32 @@ class WeatherBitProvider : WeatherProvider() {
 
     override fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<CurrentWeatherDTO>) {
         if (cityName != null) {
-            RetrofitService().getWeatherService(baseURL)
-                    ?.getWeatherBitData(cityName, units, apiKey)
-                    ?.enqueue(object : Callback<WeatherBitModel.WeatherBitDTO> {
-                        override fun onFailure(call: Call<WeatherBitModel.WeatherBitDTO>?, t: Throwable?) {
-                            listener.onFailure()
-                        }
+            getWeatherServiceEndPoint(cityName).enqueue(object : Callback<WeatherBitModel.WeatherBitDTO> {
+                override fun onFailure(call: Call<WeatherBitModel.WeatherBitDTO>?, t: Throwable?) {
+                    listener.onFailure()
+                }
 
-                        override fun onResponse(call: Call<WeatherBitModel.WeatherBitDTO>?, response: Response<WeatherBitModel.WeatherBitDTO>?) {
-                            if (response != null && response.isSuccessful) {
-                                if (response.body() == null) {
-                                    listener.onSuccess(null)
-                                } else {
-                                    val weatherBitDTO = response.body() as WeatherBitModel.WeatherBitDTO
-                                    listener.onSuccess(ModelConversionUtil.convertWeatherBitResponse(weatherBitDTO))
-                                }
-                            } else {
-                                listener.onFailure()
-                            }
+                override fun onResponse(call: Call<WeatherBitModel.WeatherBitDTO>?, response: Response<WeatherBitModel.WeatherBitDTO>?) {
+                    if (response != null && response.isSuccessful) {
+                        if (response.body() == null) {
+                            listener.onSuccess(null)
+                        } else {
+                            val weatherBitDTO = response.body() as WeatherBitModel.WeatherBitDTO
+                            listener.onSuccess(ModelConversionUtil.convertWeatherBitResponse(weatherBitDTO))
                         }
+                    } else {
+                        listener.onFailure()
+                    }
+                }
 
-                    })
+            })
         } else {
             listener.onFailure()
         }
+    }
+
+    fun getWeatherServiceEndPoint(cityName: String): Call<WeatherBitModel.WeatherBitDTO> {
+        return RetrofitService().getWeatherService(baseURL)
+                .getWeatherBitData(cityName, units, apiKey)
     }
 }

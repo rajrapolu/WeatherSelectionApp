@@ -23,9 +23,8 @@ class OpenWeatherProvider : WeatherProvider() {
 
     override fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<CurrentWeatherDTO>) {
         if (cityName != null && countryName != null) {
-            RetrofitService().getWeatherService(baseURL)
-                    ?.getOpenWeatherData("$cityName,$countryName", units, apiKey)
-                    ?.enqueue(object : Callback<OpenWeatherModel.LocationWeatherDTO> {
+            getWeatherServiceEndPoint(cityName, countryName)
+                    .enqueue(object : Callback<OpenWeatherModel.LocationWeatherDTO> {
                         override fun onFailure(call: Call<OpenWeatherModel.LocationWeatherDTO>?, t: Throwable?) {
                             listener.onFailure()
                         }
@@ -46,5 +45,9 @@ class OpenWeatherProvider : WeatherProvider() {
         } else {
             listener.onFailure()
         }
+    }
+
+    fun getWeatherServiceEndPoint(cityName: String, countryName: String): Call<OpenWeatherModel.LocationWeatherDTO> {
+        return RetrofitService().getWeatherService(baseURL).getOpenWeatherData("$cityName,$countryName", units, apiKey)
     }
 }

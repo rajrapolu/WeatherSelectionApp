@@ -6,6 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitService {
+
     private var mWeatherService: WeatherService? = null
 
     private val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
@@ -16,7 +17,7 @@ class RetrofitService {
         this.addInterceptor(interceptor)
     }.build()
 
-    fun getWeatherService(baseUrl: String): WeatherService? {
+    fun getWeatherService(baseUrl: String): WeatherService {
         mWeatherService = Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -24,6 +25,6 @@ class RetrofitService {
                 .build()
                 .create(WeatherService::class.java)
 
-        return mWeatherService
+        return mWeatherService!!
     }
 }
