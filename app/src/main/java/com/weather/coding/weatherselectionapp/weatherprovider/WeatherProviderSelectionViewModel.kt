@@ -27,8 +27,7 @@ class WeatherProviderSelectionViewModel : ViewModel() {
         val intent = Intent(applicationContext, PeriodicNotificationService::class.java)
         val pendingIntent = PendingIntent.getBroadcast(applicationContext, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager: AlarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        //TODO change 30000 to one day interval
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 3000, pendingIntent)
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_HOUR, pendingIntent)
         sharedPreferenceUtil.savePeriodicCallSetUp()
     }
 
