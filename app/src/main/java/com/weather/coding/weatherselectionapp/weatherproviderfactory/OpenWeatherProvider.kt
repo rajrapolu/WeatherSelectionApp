@@ -1,11 +1,10 @@
 package com.weather.coding.weatherselectionapp.weatherproviderfactory
 
-import android.util.Log
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.RequiredFields
 import com.weather.coding.weatherselectionapp.Util.ModelConversionUtil
 import com.weather.coding.weatherselectionapp.dataobjects.OpenWeatherModel
-import com.weather.coding.weatherselectionapp.networkcalls.NetworkRequests
+import com.weather.coding.weatherselectionapp.networkcalls.NetworkCallListener
 import com.weather.coding.weatherselectionapp.networkcalls.RetrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,7 +21,7 @@ class OpenWeatherProvider : WeatherProvider() {
         get() = "http://api.openweathermap.org/"
     val units = "imperial"
 
-    override fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkRequests.NetworkCallListener<CurrentWeatherDTO>) {
+    override fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<CurrentWeatherDTO>) {
         if (cityName != null && countryName != null) {
             RetrofitService().getWeatherService(baseURL)
                     ?.getOpenWeatherData("$cityName,$countryName", units, apiKey)

@@ -8,7 +8,7 @@ import com.weather.coding.weatherselectionapp.Util.NotificationUtil
 import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
 
-class NotificationService: Service(), NetworkRequests.NetworkCallListener<CurrentWeatherDTO> {
+class NotificationService: Service(), NetworkCallListener<CurrentWeatherDTO> {
     override fun onSuccess(model: CurrentWeatherDTO?) {
         if (model != null) {
             NotificationUtil.createNotification(applicationContext, model)

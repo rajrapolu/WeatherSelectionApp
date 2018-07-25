@@ -4,7 +4,7 @@ import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.RequiredFields
 import com.weather.coding.weatherselectionapp.Util.ModelConversionUtil
 import com.weather.coding.weatherselectionapp.dataobjects.WeatherBitModel
-import com.weather.coding.weatherselectionapp.networkcalls.NetworkRequests
+import com.weather.coding.weatherselectionapp.networkcalls.NetworkCallListener
 import com.weather.coding.weatherselectionapp.networkcalls.RetrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,7 +21,7 @@ class WeatherBitProvider : WeatherProvider() {
         get() = "WeatherBit Api"
     val units = "I"
 
-    override fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkRequests.NetworkCallListener<CurrentWeatherDTO>) {
+    override fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<CurrentWeatherDTO>) {
         if (cityName != null) {
             RetrofitService().getWeatherService(baseURL)
                     ?.getWeatherBitData(cityName, units, apiKey)

@@ -15,7 +15,7 @@ class ModelConversionUtil {
         }
 
         fun convertDarkSkyDTO(darkSkyDTO: DarkSkyModel.DarkSkyDTO): CurrentWeatherDTO {
-            return CurrentWeatherDTO(darkSkyDTO.darkSkyCurrentWeatherDTO.temperature.toString(), "${darkSkyDTO.latitude.toString()}, ${darkSkyDTO.longitude.toString()}", darkSkyDTO.darkSkyCurrentWeatherDTO.windSpeed.toString(), null, null, null)
+            return CurrentWeatherDTO(darkSkyDTO.darkSkyCurrentWeatherDTO.temperature.toString(), "${darkSkyDTO.latitude}, ${darkSkyDTO.longitude}", darkSkyDTO.darkSkyCurrentWeatherDTO.windSpeed.toString(), null, null, null)
         }
 
         fun convertFiveDayWeatherDTO(fiveDayWeatherDTO: FiveDayWeatherModel.FiveDayWeatherDataDTO): CurrentWeatherDTO {
