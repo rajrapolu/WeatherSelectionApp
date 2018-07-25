@@ -25,6 +25,9 @@ import kotlinx.android.synthetic.main.activity_location_input.*
 private const val PLACE_PICKER_REQUEST: Int = 99
 
 class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
+    private lateinit var mLocationInputViewModel: LocationInputViewModel
+    private var weatherProviderName: String? = null
+    private var typeOfUI: RequiredFields? = null
 
     companion object {
         fun newInstance(context: Context) {
@@ -34,11 +37,8 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
-        Toast.makeText(this, "Connection to Google Play Service failed", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, getString(R.string.google_play_connection_failed), Toast.LENGTH_LONG).show()
     }
-
-    private lateinit var mLocationInputViewModel: LocationInputViewModel
-    private var weatherProviderName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,22 +58,22 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
     }
 
     private fun configureWeatherProviderUI() {
-        weatherProviderName = SharedPreferenceUtil.getInstance(applicationContext).getSavedWeatherProvider()
+        weatherProviderName = mLocationInputViewModel.fetchWeatherProvider(applicationContext)
         if (weatherProviderName != null) {
             val weatherProvider = WeatherProviderFactory().getWeatherProvider(weatherProviderName!!)
-            val fieldsRequired: RequiredFields = weatherProvider.fieldsRequired
-            configureUIBasedOnRequiredField(fieldsRequired)
+            typeOfUI = weatherProvider.fieldsRequired
+            configureUIBasedOnRequiredField()
         }
     }
 
-    private fun configureUIBasedOnRequiredField(fieldsRequired: RequiredFields) {
-        if (fieldsRequired == RequiredFields.CITY_COUNTRY_NAME) {
+    private fun configureUIBasedOnRequiredField() {
+        if (typeOfUI == RequiredFields.CITY_COUNTRY_NAME) {
             location_city_name.visibility = View.VISIBLE
             location_country_name.visibility = View.VISIBLE
-        } else if (fieldsRequired == RequiredFields.CITY_NAME) {
+        } else if (typeOfUI == RequiredFields.CITY_NAME) {
             location_city_name.visibility = View.VISIBLE
             location_country_name.visibility = View.GONE
-        } else if (fieldsRequired == RequiredFields.LAT_LNG) {
+        } else if (typeOfUI == RequiredFields.LAT_LNG) {
             location_city_name.visibility = View.GONE
             location_country_name.visibility = View.GONE
             location_continue.text = getString(R.string.lat_lng_provider_button_label)
@@ -106,40 +106,17 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
         if (currentWeather != null) {
             CurrentWeatherActivity.newInstance(this, currentWeather)
         } else {
-            Toast.makeText(this, "Enter valid city", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.enter_valid_location_label), Toast.LENGTH_LONG).show()
         }
     }
 
     private fun onButtonClicked() {
-        if (weatherProviderName == WeatherProviders.DARK_SKY.name) {
-            openPlacePicker()
-        } else if (weatherProviderName == WeatherProviders.OPEN_WEATHER.name) {
-            location_input_progress_bar.visibility = View.VISIBLE
-            val cityName = location_city_name?.text?.toString()
-            val countryName = location_country_name?.text?.toString()
-            if (cityName != null && countryName != null) {
-                mLocationInputViewModel.saveLocationData(applicationContext, cityName, countryName)
-                mLocationInputViewModel.getOpenWeatherInformation(location_city_name.text.toString(), location_country_name.text.toString())
+        if (typeOfUI != null) {
+            if (typeOfUI == RequiredFields.LAT_LNG) {
+                openPlacePicker()
             } else {
-                Toast.makeText(this, "Please enter valid city and country name", Toast.LENGTH_LONG).show()
-            }
-        } else if (weatherProviderName == WeatherProviders.FIVE_DAY_WEATHER.name) {
-            location_input_progress_bar.visibility = View.VISIBLE
-            val cityName = location_city_name?.text?.toString()
-            if (cityName != null) {
-                mLocationInputViewModel.saveLocationData(applicationContext, cityName, "")
-                mLocationInputViewModel.getFiveDayWeatherInformation(cityName)
-            } else {
-                Toast.makeText(this, "Please enter valid city name", Toast.LENGTH_LONG).show()
-            }
-        } else if (weatherProviderName == WeatherProviders.WEATHER_BIT.name) {
-            location_input_progress_bar.visibility = View.VISIBLE
-            val cityName = location_city_name?.text?.toString()
-            if (cityName != null) {
-                mLocationInputViewModel.saveLocationData(applicationContext, cityName, "")
-                mLocationInputViewModel.getWeatherBitInformation(cityName)
-            } else {
-                Toast.makeText(this, "Please enter valid city name", Toast.LENGTH_LONG).show()
+                mLocationInputViewModel.saveLocationData(applicationContext, location_city_name?.text?.toString(), location_country_name?.text?.toString())
+                getWeatherInformation(location_city_name?.text?.toString(), location_country_name?.text?.toString(), null, null)
             }
         }
     }
@@ -150,8 +127,15 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
             val latitude = place.latLng.latitude
             val longitude = place.latLng.longitude
             mLocationInputViewModel.saveLatLngData(applicationContext, latitude, longitude)
-            mLocationInputViewModel.getDarkSkyInformation(place.latLng.latitude, place.latLng.longitude)
+            getWeatherInformation(null, null, latitude, longitude)
             Toast.makeText(this, place.latLng.latitude.toString() + " " + place.latLng.longitude.toString(), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?) {
+        location_input_progress_bar.visibility = View.VISIBLE
+        if (!mLocationInputViewModel.getWeatherInformation(applicationContext, cityName, countryName, latitude, longitude)) {
+            Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }
     }
 }
