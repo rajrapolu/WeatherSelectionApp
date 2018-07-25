@@ -2,22 +2,21 @@ package com.weather.coding.weatherselectionapp.locationinput
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.places.Places
 import com.google.android.gms.location.places.ui.PlacePicker
+import com.weather.coding.weatherselectionapp.ConstantsClass
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.R
 import com.weather.coding.weatherselectionapp.RequiredFields
 import com.weather.coding.weatherselectionapp.Util.NotificationUtil
-import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
-import com.weather.coding.weatherselectionapp.WeatherProviders
 import com.weather.coding.weatherselectionapp.currentweather.CurrentWeatherActivity
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
 import kotlinx.android.synthetic.main.activity_location_input.*
@@ -28,13 +27,6 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
     private lateinit var mLocationInputViewModel: LocationInputViewModel
     private var weatherProviderName: String? = null
     private var typeOfUI: RequiredFields? = null
-
-    companion object {
-        fun newInstance(context: Context) {
-            val intent = Intent(context, LocationInputActivity::class.java)
-            context.startActivity(intent)
-        }
-    }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
         Toast.makeText(this, getString(R.string.google_play_connection_failed), Toast.LENGTH_LONG).show()
@@ -102,14 +94,24 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
     }
 
     private fun populateUI(currentWeather: CurrentWeatherDTO?) {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         location_input_progress_bar.visibility = View.GONE
         if (currentWeather != null) {
-            CurrentWeatherActivity.newInstance(this, currentWeather)
+            navigateToCurrentWeatherActivity(currentWeather)
         } else {
             Toast.makeText(this, getString(R.string.enter_valid_location_label), Toast.LENGTH_LONG).show()
         }
     }
 
+    private fun navigateToCurrentWeatherActivity(currentWeather: CurrentWeatherDTO) {
+        val intent = Intent(this, CurrentWeatherActivity::class.java)
+        intent.putExtra(ConstantsClass.LOCATION_WEATHER_KEY, currentWeather)
+        startActivity(intent)
+    }
+
+    /**
+     * Call back when get weather or set places button is clicked
+     */
     private fun onButtonClicked() {
         if (typeOfUI != null) {
             if (typeOfUI == RequiredFields.LAT_LNG) {
@@ -134,6 +136,8 @@ class LocationInputActivity : AppCompatActivity(), GoogleApiClient.OnConnectionF
 
     private fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?) {
         location_input_progress_bar.visibility = View.VISIBLE
+        // Does not allow user to perform any operation while data is loading
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         if (!mLocationInputViewModel.getWeatherInformation(applicationContext, cityName, countryName, latitude, longitude)) {
             Toast.makeText(this, getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show()
         }

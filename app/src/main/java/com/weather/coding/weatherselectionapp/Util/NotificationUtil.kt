@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import com.weather.coding.weatherselectionapp.ConstantsClass
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.R
 import com.weather.coding.weatherselectionapp.currentweather.CurrentWeatherActivity
@@ -19,16 +20,15 @@ private const val PENDING_INTENT_REQUEST_CODE = 999
 class NotificationUtil {
 
     companion object {
-
-
         /**
          * Creates notification channel. As a default we attach CHANNEL_ID as the id for notification channel
          * @param applicationContext
          */
         fun createNotificationChannel(applicationContext: Context) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val notificationChannel = NotificationChannel(CHANNEL_ID, "All_Channel", NotificationManager.IMPORTANCE_DEFAULT)
-                notificationChannel.description = "This is the only channel for notifications"
+                val notificationChannel = NotificationChannel(CHANNEL_ID,
+                        applicationContext.getString(R.string.notification_channel_name), NotificationManager.IMPORTANCE_DEFAULT)
+                notificationChannel.description = applicationContext.getString(R.string.notification_channel_description)
                 val notificationManager: NotificationManager = applicationContext.getSystemService(NotificationManager::class.java)
                 notificationManager.createNotificationChannel(notificationChannel)
             }
@@ -42,7 +42,7 @@ class NotificationUtil {
          */
         fun createNotification(applicationContext: Context, model: CurrentWeatherDTO) {
             val intent = Intent(applicationContext, CurrentWeatherActivity::class.java)
-            intent.putExtra(CurrentWeatherActivity.LOCATION_WEATHER_KEY, model)
+            intent.putExtra(ConstantsClass.LOCATION_WEATHER_KEY, model)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             val pendingIntent = PendingIntent.getActivity(applicationContext, PENDING_INTENT_REQUEST_CODE, intent, 0)
             val notificationBuilder: NotificationCompat.Builder =

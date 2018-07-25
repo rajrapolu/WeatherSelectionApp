@@ -1,27 +1,16 @@
 package com.weather.coding.weatherselectionapp.currentweather
 
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.weather.coding.weatherselectionapp.ConstantsClass
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.R
-import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
 import com.weather.coding.weatherselectionapp.Util.UnitsUtil
 import kotlinx.android.synthetic.main.activity_current_weather.*
 
 class CurrentWeatherActivity : AppCompatActivity() {
-
-    companion object {
-        const val LOCATION_WEATHER_KEY: String = "LOCATION_WEATHER_KEY"
-        fun newInstance(context: Context, currentWeather: CurrentWeatherDTO) {
-            val intent = Intent(context, CurrentWeatherActivity::class.java)
-            intent.putExtra(LOCATION_WEATHER_KEY, currentWeather)
-            context.startActivity(intent)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +19,7 @@ class CurrentWeatherActivity : AppCompatActivity() {
     }
 
     private fun populateUI() {
-        val currentWeather: CurrentWeatherDTO? = intent.getParcelableExtra(LOCATION_WEATHER_KEY)
+        val currentWeather: CurrentWeatherDTO? = intent.getParcelableExtra(ConstantsClass.LOCATION_WEATHER_KEY)
         current_weather_provider.text = ViewModelProviders.of(this).get(CurrentWeatherViewModel::class.java).getSavedWeatherProvider(applicationContext)
         if (currentWeather != null) {
             current_weather_city_country_label.text = currentWeather.location
