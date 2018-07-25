@@ -1,8 +1,8 @@
 package com.weather.coding.weatherselectionapp.weatherprovider
 
 import android.arch.lifecycle.ViewModelProviders
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.RadioButton
@@ -21,7 +21,10 @@ class WeatherProviderSelectionActivity : AppCompatActivity() {
     val onRadioButtonClickListener = View.OnClickListener { view -> onRadioButtonClicked(view) }
 
     private fun onRadioButtonClicked(view: View) {
-        if ((view as RadioButton).isChecked) mWeatherProvider = view.tag as String?
+        if ((view as RadioButton).isChecked) {
+            mWeatherProvider = view.tag as String
+            mWeatherViewModel.saveSelectedRadioButton(mWeatherProvider!!)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +49,10 @@ class WeatherProviderSelectionActivity : AppCompatActivity() {
             radioButton.setOnClickListener(onRadioButtonClickListener)
             radioGroup.addView(radioButton)
         }
+        mWeatherProvider = mWeatherViewModel.getSavedSelectedRadioButton()
+        if (mWeatherProvider != null) {
+            (radioGroup.findViewWithTag<RadioButton>(mWeatherProvider)).isChecked = true
+        }
         weather_provider_root_view.addView(radioGroup)
         LayoutInflater.from(this).inflate(R.layout.weather_provider_continue_button_layout, weather_provider_root_view, true)
     }
@@ -59,7 +66,7 @@ class WeatherProviderSelectionActivity : AppCompatActivity() {
             mWeatherViewModel.saveWeatherProviderPref(applicationContext, mWeatherProvider!!)
             LocationInputActivity.newInstance(this)
         } else {
-            Toast.makeText(this, "Please select one of the provider", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.select_provider_label), Toast.LENGTH_LONG).show()
         }
     }
 

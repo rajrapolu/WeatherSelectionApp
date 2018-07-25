@@ -12,4 +12,8 @@
     <string name="current_temp_label">%1$s%2$s</string>
     <string name="weather_provider_continue_label">Continue</string>
     <string name="lat_lng_provider_button_label">Select place</string>
+    <string name="select_provider_label">Please select one of the provider</string>
+    <string name="enter_valid_location_label">Please enter/select valid location</string>
+    <string name="google_play_connection_failed">Connection to Google Play Service failed</string>
+    <string name="something_went_wrong">Something went wrong. Please select weather provider again</string>
 </resources>

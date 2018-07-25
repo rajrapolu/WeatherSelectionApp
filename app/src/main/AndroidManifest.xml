@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".locationinput.LocationInputActivity"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:parentActivityName=".weatherprovider.WeatherProviderSelectionActivity">
         </activity>
 
         <receiver
@@ -25,7 +26,8 @@
             android:name=".networkcalls.NotificationService"
             android:exported="false" />
 
-        <activity android:name=".currentweather.CurrentWeatherActivity" />
+        <activity android:name=".currentweather.CurrentWeatherActivity"
+            android:parentActivityName=".locationinput.LocationInputActivity"/>
         <activity android:name=".weatherprovider.WeatherProviderSelectionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

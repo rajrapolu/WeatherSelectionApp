@@ -6,9 +6,9 @@ import android.os.IBinder
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.Util.NotificationUtil
 import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
-import com.weather.coding.weatherselectionapp.WeatherProviders
+import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
 
-class NotificationService: Service(), NetworkRequests.NetworkCallListener<CurrentWeatherDTO> {
+class NotificationService: Service(), NetworkCallListener<CurrentWeatherDTO> {
     override fun onSuccess(model: CurrentWeatherDTO?) {
         if (model != null) {
             NotificationUtil.createNotification(applicationContext, model)
@@ -31,28 +31,15 @@ class NotificationService: Service(), NetworkRequests.NetworkCallListener<Curren
 
     private fun chooseNetworkOperation() {
         val sharedPreferenceUtil = SharedPreferenceUtil.getInstance(applicationContext)
-        val weatherProvider = sharedPreferenceUtil.getSavedWeatherProvider()
-        when (weatherProvider) {
-            WeatherProviders.OPEN_WEATHER.name -> {
-                if (sharedPreferenceUtil.getSavedCityName() != null && sharedPreferenceUtil.getSavedCountryName() != null) {
-                    NetworkRequests().getOpenWeatherInformation(sharedPreferenceUtil.getSavedCityName()!!, sharedPreferenceUtil.getSavedCountryName()!!, this)
-                }
-            }
-            WeatherProviders.DARK_SKY.name -> {
-                if (sharedPreferenceUtil.getSavedLatitude() != null && sharedPreferenceUtil.getSavedLongitude() != null) {
-                    NetworkRequests().getDarkSkyInformation(sharedPreferenceUtil.getSavedLatitude()!!, sharedPreferenceUtil.getSavedLongitude()!!, this)
-                }
-            }
-            WeatherProviders.FIVE_DAY_WEATHER.name -> {
-                if (sharedPreferenceUtil.getSavedCityName() != null) {
-                    NetworkRequests().getFiveDayWeatherInformation(sharedPreferenceUtil.getSavedCityName()!!, this)
-                }
-            }
-            WeatherProviders.WEATHER_BIT.name -> {
-                if (sharedPreferenceUtil.getSavedCityName() != null) {
-                    NetworkRequests().getWeatherBitInformation(sharedPreferenceUtil.getSavedCityName()!!, this)
-                }
-            }
+        val weatherProviderName = sharedPreferenceUtil.getSavedWeatherProvider()
+
+        if (weatherProviderName != null) {
+            val cityName: String? = sharedPreferenceUtil.getSavedCityName()
+            val countryName: String? = sharedPreferenceUtil.getSavedCountryName()
+            val latitude: Double? = sharedPreferenceUtil.getSavedLatitude()
+            val longitude: Double? = sharedPreferenceUtil.getSavedLongitude()
+            val weatherProvider = WeatherProviderFactory().getWeatherProvider(weatherProviderName)
+            weatherProvider.getWeatherInformation(cityName, countryName, latitude, longitude, this)
         }
     }
 }
