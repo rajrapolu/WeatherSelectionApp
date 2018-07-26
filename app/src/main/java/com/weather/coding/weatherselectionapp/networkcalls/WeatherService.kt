@@ -1,9 +1,6 @@
 package com.weather.coding.weatherselectionapp.networkcalls
 
-import com.weather.coding.weatherselectionapp.dataobjects.DarkSkyModel
-import com.weather.coding.weatherselectionapp.dataobjects.FiveDayWeatherModel
-import com.weather.coding.weatherselectionapp.dataobjects.OpenWeatherModel
-import com.weather.coding.weatherselectionapp.dataobjects.WeatherBitModel
+import com.weather.coding.weatherselectionapp.dataobjects.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.http.GET
@@ -24,4 +21,7 @@ interface WeatherService {
 
     @GET("v2.0/current")
     fun getWeatherBitData(@Query("city") cityName: String, @Query("units") units: String, @Query("key") apiKey: String): Call<WeatherBitModel.WeatherBitDTO>
+
+    @GET("v2.0/forecast/daily")
+    fun getWeatherBitForecast(@Query("city") cityName: String, @Query("units") units: String, @Query("days") forecastDays: Int, @Query("key") apiKey: String): Call<WeatherBitForecastModel.WeatherBitForecastDTO>
 }

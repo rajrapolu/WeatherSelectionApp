@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin_padding"
         android:layout_marginTop="@dimen/default_margin_padding"
-        android:text="CityName, Country"
+        tools:text="CityName, Country"
         android:textSize="@dimen/city_country_label_text_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/current_weather_provider" />
@@ -77,4 +77,19 @@
         app:layout_constraintStart_toEndOf="@+id/current_weather_temp_value"
         app:layout_constraintTop_toTopOf="@+id/current_weather_temp_value"
         tools:text="Wind:" />
+
+    <Button
+        android:id="@+id/current_weather_forecast_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_margin_padding"
+        android:layout_marginStart="@dimen/default_margin_padding"
+        android:layout_marginTop="@dimen/default_margin_padding"
+        android:layout_marginBottom="@dimen/default_margin_padding"
+        android:text="@string/see_weather_forecast_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/current_weather_max_temp" />
 </android.support.constraint.ConstraintLayout>

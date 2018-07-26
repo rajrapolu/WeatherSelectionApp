@@ -12,9 +12,9 @@ import com.weather.coding.weatherselectionapp.networkcalls.NetworkRequests
 
 class LocationInputViewModel : ViewModel() {
     var mCurrentWeatherDTO: MutableLiveData<CurrentWeatherDTO>? = null
-    var mNetworkRequests: NetworkRequests = NetworkRequests()
+    var mNetworkRequests = NetworkRequests()
     var mNetworkRequestLiveData: MutableLiveData<CurrentWeatherDTO>? = null
-    var mResponseLiveData: MutableLiveData<CurrentWeatherDTO> = MutableLiveData()
+    var mResponseLiveData = MutableLiveData<CurrentWeatherDTO>()
 
     /**
      * Observing on this live data helps in observing the changes made on livedata object between
