@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/default_margin_padding">
+
+    <TextView
+        android:id="@+id/weather_item_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/list_text_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2018-02-02" />
+
+    <TextView
+        android:id="@+id/weather_item_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_padding"
+        android:textSize="@dimen/city_country_label_text_size"
+        app:layout_constraintBottom_toBottomOf="@+id/weather_item_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/weather_item_date"
+        app:layout_constraintTop_toTopOf="@+id/weather_item_date"
+        tools:text="75F" />
+
+    <TextView
+        android:id="@+id/weather_max_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/half_default_margin_padding"
+        android:textSize="@dimen/list_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weather_item_temp"
+        tools:text="max_temp" />
+
+    <TextView
+        android:id="@+id/weather_min_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_margin_padding"
+        android:layout_marginStart="@dimen/default_margin_padding"
+        app:layout_constraintBottom_toBottomOf="@+id/weather_max_temp"
+        app:layout_constraintEnd_toStartOf="@+id/weather_max_temp"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="@dimen/list_text_size"
+        app:layout_constraintTop_toTopOf="@+id/weather_max_temp"
+        tools:text="min_temp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seperator_width"
+        android:layout_marginTop="@dimen/default_margin_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/seperatorColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weather_min_temp" />
+
+</android.support.constraint.ConstraintLayout>

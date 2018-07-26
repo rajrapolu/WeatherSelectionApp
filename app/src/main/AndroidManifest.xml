@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,16 +15,17 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".locationinput.LocationInputActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:parentActivityName=".weatherprovider.WeatherProviderSelectionActivity">
-        </activity>
+            android:parentActivityName=".weatherprovider.WeatherProviderSelectionActivity"
+            android:windowSoftInputMode="stateHidden"/>
 
-        <service android:name=".networkcalls.PeriodicNotificationJobService"
+        <service
+            android:name=".networkcalls.PeriodicNotificationJobService"
             android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <activity android:name=".currentweather.CurrentWeatherActivity"
-            android:parentActivityName=".locationinput.LocationInputActivity"/>
+        <activity
+            android:name=".currentweather.CurrentWeatherActivity"
+            android:parentActivityName=".locationinput.LocationInputActivity" />
         <activity android:name=".weatherprovider.WeatherProviderSelectionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +36,10 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAgvIKu7oIVLGIRJub81Rdzc5i8EDUYmi8"/>
+            android:value="AIzaSyAgvIKu7oIVLGIRJub81Rdzc5i8EDUYmi8" />
+
+        <activity android:name=".weatherforecast.WeatherForecastActivity"
+            android:parentActivityName=".currentweather.CurrentWeatherActivity"/>
     </application>
 
 </manifest>
