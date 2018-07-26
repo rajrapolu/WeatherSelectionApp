@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import android.view.View
 import com.weather.coding.weatherselectionapp.ConstantsClass
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
@@ -11,7 +12,6 @@ import com.weather.coding.weatherselectionapp.R
 import com.weather.coding.weatherselectionapp.Util.UnitsUtil
 import com.weather.coding.weatherselectionapp.WeatherProviders
 import com.weather.coding.weatherselectionapp.weatherforecast.WeatherForecastActivity
-import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProvider
 import kotlinx.android.synthetic.main.activity_current_weather.*
 
 class CurrentWeatherActivity : AppCompatActivity() {
@@ -28,6 +28,9 @@ class CurrentWeatherActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        if (currentWeather == null) {
+            currentWeather = mCurrentWeatherViewModel.getCurrentWeather()
+        }
         populateUI()
     }
 
@@ -36,6 +39,7 @@ class CurrentWeatherActivity : AppCompatActivity() {
         val weatherProviderName = mCurrentWeatherViewModel.getSavedWeatherProvider(applicationContext)
         current_weather_provider.text = weatherProvider?.displayName
         if (currentWeather != null) {
+            mCurrentWeatherViewModel.saveCurrentWeather(currentWeather!!)
             current_weather_city_country_label.text = currentWeather!!.location
             current_weather_temp_value.text = getString(R.string.current_temp_label, currentWeather!!.currentTemp, UnitsUtil.getFahrenheitUnit())
             if (currentWeather!!.windSpeed != null) {
@@ -65,5 +69,16 @@ class CurrentWeatherActivity : AppCompatActivity() {
         val intent = Intent(this, WeatherForecastActivity::class.java)
         intent.putExtra(ConstantsClass.CITY_NAME_EXTRA, location)
         startActivity(intent)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item != null) {
+            val id = item.itemId
+            if (id == android.R.id.home) {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

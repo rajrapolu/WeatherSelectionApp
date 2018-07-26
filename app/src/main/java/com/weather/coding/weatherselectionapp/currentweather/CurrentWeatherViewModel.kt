@@ -2,12 +2,14 @@ package com.weather.coding.weatherselectionapp.currentweather
 
 import android.arch.lifecycle.ViewModel
 import android.content.Context
+import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProvider
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
 
 class CurrentWeatherViewModel: ViewModel() {
     private var mWeatherFactory: WeatherProviderFactory = WeatherProviderFactory()
+    private var mCurrentWeather: CurrentWeatherDTO? = null
 
     fun getSavedWeatherProvider(applicationContext: Context): String? {
         return SharedPreferenceUtil.getInstance(applicationContext).getSavedWeatherProvider()
@@ -19,5 +21,13 @@ class CurrentWeatherViewModel: ViewModel() {
             return mWeatherFactory.getWeatherProvider(weatherProvider)
         }
         return null
+    }
+
+    fun saveCurrentWeather(currentWeatherDTO: CurrentWeatherDTO) {
+        mCurrentWeather = currentWeatherDTO
+    }
+
+    fun getCurrentWeather(): CurrentWeatherDTO? {
+        return mCurrentWeather
     }
 }
