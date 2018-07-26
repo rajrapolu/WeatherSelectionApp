@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.weather.coding.weatherselectionapp.ConstantsClass
@@ -64,5 +65,16 @@ class WeatherForecastActivity : AppCompatActivity() {
             weather_forecast_progress_bar.visibility = View.VISIBLE
             mWeatherForecastViewModel.getWeatherForecast(weatherProvider, cityName!!, null, null, null)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item != null) {
+            val id = item.itemId
+            if (id == android.R.id.home) {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
