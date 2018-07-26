@@ -3,6 +3,7 @@ package com.weather.coding.weatherselectionapp.weatherproviderfactory
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.RequiredFields
 import com.weather.coding.weatherselectionapp.Util.ModelConversionUtil
+import com.weather.coding.weatherselectionapp.WeatherForecastModel
 import com.weather.coding.weatherselectionapp.dataobjects.OpenWeatherModel
 import com.weather.coding.weatherselectionapp.networkcalls.NetworkCallListener
 import com.weather.coding.weatherselectionapp.networkcalls.RetrofitService
@@ -11,6 +12,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class OpenWeatherProvider : WeatherProvider() {
+    override val supportWeatherForecast: Boolean
+        get() = false
     override val displayName: String
         get() = "Open Weather Api"
     override val apiKey: String
@@ -20,6 +23,10 @@ class OpenWeatherProvider : WeatherProvider() {
     override val baseURL: String
         get() = "http://api.openweathermap.org/"
     val units = "imperial"
+
+    fun getWeatherServiceEndPoint(cityName: String, countryName: String): Call<OpenWeatherModel.LocationWeatherDTO> {
+        return RetrofitService().getWeatherService(baseURL).getOpenWeatherData("$cityName,$countryName", units, apiKey)
+    }
 
     override fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<CurrentWeatherDTO>) {
         if (cityName != null && countryName != null) {
@@ -47,7 +54,7 @@ class OpenWeatherProvider : WeatherProvider() {
         }
     }
 
-    fun getWeatherServiceEndPoint(cityName: String, countryName: String): Call<OpenWeatherModel.LocationWeatherDTO> {
-        return RetrofitService().getWeatherService(baseURL).getOpenWeatherData("$cityName,$countryName", units, apiKey)
+    override fun getWeatherForecast(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<WeatherForecastModel.WeatherForecastDTO>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

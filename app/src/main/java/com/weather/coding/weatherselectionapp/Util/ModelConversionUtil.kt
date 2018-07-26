@@ -1,10 +1,8 @@
 package com.weather.coding.weatherselectionapp.Util
 
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
-import com.weather.coding.weatherselectionapp.dataobjects.DarkSkyModel
-import com.weather.coding.weatherselectionapp.dataobjects.FiveDayWeatherModel
-import com.weather.coding.weatherselectionapp.dataobjects.OpenWeatherModel
-import com.weather.coding.weatherselectionapp.dataobjects.WeatherBitModel
+import com.weather.coding.weatherselectionapp.WeatherForecastModel
+import com.weather.coding.weatherselectionapp.dataobjects.*
 
 class ModelConversionUtil {
 
@@ -24,6 +22,22 @@ class ModelConversionUtil {
 
         fun convertWeatherBitResponse(weatherBitDTO: WeatherBitModel.WeatherBitDTO): CurrentWeatherDTO {
             return CurrentWeatherDTO(weatherBitDTO.data[0].temp.toString(), weatherBitDTO.data[0].cityName, weatherBitDTO.data[0].windSpeed.toString(), null, null, null)
+        }
+
+        /**
+         * converts weather forecast from weatherbit provider to weather forecast
+         */
+        fun convertWeatherBitToForecast(weatherBitForecastDTO: WeatherBitForecastModel.WeatherBitForecastDTO): WeatherForecastModel.WeatherForecastDTO {
+            val dayForecastList: MutableList<WeatherForecastModel.DayForecast> = ArrayList()
+            val weatherForecastData = weatherBitForecastDTO.weatherForecastData
+            if (weatherForecastData.isNotEmpty()) {
+                for (i in weatherBitForecastDTO.weatherForecastData.indices) {
+                    val weatherForecast = weatherForecastData[i]
+                    dayForecastList.add(WeatherForecastModel.DayForecast(weatherForecast.temp.toString(),
+                            weatherForecast.minTemp.toString(), weatherForecast.maxTemp.toString(), weatherForecast.date))
+                }
+            }
+            return WeatherForecastModel.WeatherForecastDTO(weatherBitForecastDTO.cityName, dayForecastList)
         }
     }
 }

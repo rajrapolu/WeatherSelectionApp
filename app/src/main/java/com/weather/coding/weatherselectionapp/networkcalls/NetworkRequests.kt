@@ -4,8 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
 
-class NetworkRequests: NetworkCallListener<CurrentWeatherDTO> {
-
+class NetworkRequests : NetworkCallListener<CurrentWeatherDTO> {
     private var networkRequestsLiveData: MutableLiveData<CurrentWeatherDTO>? = null
 
     fun getNetworkRequestLiveData(): MutableLiveData<CurrentWeatherDTO> {

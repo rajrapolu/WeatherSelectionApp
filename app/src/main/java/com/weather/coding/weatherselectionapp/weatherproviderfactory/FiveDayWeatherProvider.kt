@@ -3,6 +3,7 @@ package com.weather.coding.weatherselectionapp.weatherproviderfactory
 import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.RequiredFields
 import com.weather.coding.weatherselectionapp.Util.ModelConversionUtil
+import com.weather.coding.weatherselectionapp.WeatherForecastModel
 import com.weather.coding.weatherselectionapp.dataobjects.FiveDayWeatherModel
 import com.weather.coding.weatherselectionapp.networkcalls.NetworkCallListener
 import com.weather.coding.weatherselectionapp.networkcalls.RetrofitService
@@ -11,6 +12,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FiveDayWeatherProvider : WeatherProvider() {
+    override val supportWeatherForecast: Boolean
+        get() = false
     override val displayName: String
         get() = "Five Day Weather Api"
     override val baseURL: String
@@ -19,6 +22,11 @@ class FiveDayWeatherProvider : WeatherProvider() {
         get() = ""
     override val fieldsRequired: RequiredFields
         get() = RequiredFields.CITY_NAME
+
+    fun getWeatherServiceEndPoint(cityName: String): Call<FiveDayWeatherModel.FiveDayWeatherDataDTO> {
+        return RetrofitService().getWeatherService(baseURL)
+                .getFiveDayWeatherData(cityName)
+    }
 
     override fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<CurrentWeatherDTO>) {
         if (cityName != null) {
@@ -46,8 +54,7 @@ class FiveDayWeatherProvider : WeatherProvider() {
         }
     }
 
-    fun getWeatherServiceEndPoint(cityName: String): Call<FiveDayWeatherModel.FiveDayWeatherDataDTO> {
-        return RetrofitService().getWeatherService(baseURL)
-                .getFiveDayWeatherData(cityName)
+    override fun getWeatherForecast(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<WeatherForecastModel.WeatherForecastDTO>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
