@@ -16,8 +16,9 @@ class OpenWeatherProvider : WeatherProvider() {
         get() = false
     override val displayName: String
         get() = "Open Weather Api"
+    // Add your api key
     override val apiKey: String
-        get() = "f12e77308bfba46a4939b7de916db179"
+        get() = ""
     override val fieldsRequired: RequiredFields
         get() = RequiredFields.CITY_COUNTRY_NAME
     override val baseURL: String

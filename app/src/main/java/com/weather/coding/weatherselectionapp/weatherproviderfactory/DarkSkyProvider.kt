@@ -18,8 +18,10 @@ class DarkSkyProvider : WeatherProvider() {
         get() = "Dark Sky Api"
     override val baseURL: String
         get() = "https://api.darksky.net/"
+
+    // Add your api key
     override val apiKey: String
-        get() = "0a3f349616016d5a625219e7256d6452"
+        get() = ""
     override val fieldsRequired: RequiredFields
         get() = RequiredFields.LAT_LNG
 
