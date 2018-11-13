@@ -1,9 +1,8 @@
-package com.weather.coding.weatherselectionapp.Util
+package com.weather.coding.weatherselectionapp.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import java.util.*
-import kotlin.collections.LinkedHashSet
 
 private const val SHARED_PREF_NAME = "com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil"
 private const val CITY_NAME = "CITY_NAME_KEY"
@@ -11,7 +10,6 @@ private const val COUNTRY_NAME = "COUNTRY_NAME_KEY"
 private const val LAT_KEY = "LAT_KEY"
 private const val LNG_KEY = "LNG_KEY"
 private const val WEATHER_PROVIDER_KEY = "WEATHER_PROVIDER_KEY"
-private const val PERIODIC_CALL_SETUP = "PERIODIC_CALL_SETUP"
 
 class SharedPreferenceUtil {
     companion object {
@@ -19,6 +17,7 @@ class SharedPreferenceUtil {
         var sharedPreferenceEditor: SharedPreferences.Editor? = null
         var sharedPreferenceUtil: SharedPreferenceUtil? = null
 
+        @SuppressLint("CommitPrefEdits")
         fun getInstance(context: Context): SharedPreferenceUtil {
             if (sharedPreferences == null) sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
             if (sharedPreferenceEditor == null) sharedPreferenceEditor = sharedPreferences?.edit()
@@ -52,15 +51,6 @@ class SharedPreferenceUtil {
         sharedPreferenceEditor?.apply()
     }
 
-    fun savePeriodicCallSetUp() {
-        sharedPreferenceEditor?.putBoolean(getKey(PERIODIC_CALL_SETUP), true)
-        sharedPreferenceEditor?.apply()
-    }
-
-    fun didPeriodicCallSetUpDone(): Boolean? {
-        return sharedPreferences?.getBoolean(getKey(PERIODIC_CALL_SETUP), false)
-    }
-
     fun getSavedCityName(): String? {
         return sharedPreferences?.getString(getKey(CITY_NAME), null)
     }
@@ -87,16 +77,5 @@ class SharedPreferenceUtil {
             return null
         }
         return lngValue?.toDouble()
-    }
-
-    fun clearSavedLocation() {
-        sharedPreferenceEditor?.remove(getKey(CITY_NAME))
-        sharedPreferenceEditor?.remove(getKey(COUNTRY_NAME))
-        sharedPreferenceEditor?.apply()
-    }
-
-    fun clearSavedWeatherProvider() {
-        sharedPreferenceEditor?.remove(getKey(WEATHER_PROVIDER_KEY))
-        sharedPreferenceEditor?.apply()
     }
 }

@@ -2,8 +2,8 @@ package com.weather.coding.weatherselectionapp.currentweather
 
 import android.arch.lifecycle.ViewModel
 import android.content.Context
-import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
-import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
+import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
+import com.weather.coding.weatherselectionapp.util.SharedPreferenceUtil
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProvider
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
 
@@ -25,9 +25,5 @@ class CurrentWeatherViewModel: ViewModel() {
 
     fun saveCurrentWeather(currentWeatherDTO: CurrentWeatherDTO) {
         mCurrentWeather = currentWeatherDTO
-    }
-
-    fun getCurrentWeather(): CurrentWeatherDTO? {
-        return mCurrentWeather
     }
 }

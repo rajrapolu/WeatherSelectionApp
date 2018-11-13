@@ -6,8 +6,8 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import android.content.Context
-import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
-import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
+import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
+import com.weather.coding.weatherselectionapp.util.SharedPreferenceUtil
 import com.weather.coding.weatherselectionapp.networkcalls.NetworkRequests
 
 class LocationInputViewModel : ViewModel() {

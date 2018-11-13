@@ -7,10 +7,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import com.weather.coding.weatherselectionapp.ConstantsClass
-import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
+import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.R
-import com.weather.coding.weatherselectionapp.Util.UnitsUtil
-import com.weather.coding.weatherselectionapp.WeatherProviders
+import com.weather.coding.weatherselectionapp.util.UnitsUtil
+import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviders
 import com.weather.coding.weatherselectionapp.weatherforecast.WeatherForecastActivity
 import kotlinx.android.synthetic.main.activity_current_weather.*
 
@@ -24,13 +24,6 @@ class CurrentWeatherActivity : AppCompatActivity() {
         setContentView(R.layout.activity_current_weather)
         mCurrentWeatherViewModel = ViewModelProviders.of(this).get(CurrentWeatherViewModel::class.java)
         currentWeather = intent.getParcelableExtra(ConstantsClass.LOCATION_WEATHER_KEY)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (currentWeather == null) {
-            currentWeather = mCurrentWeatherViewModel.getCurrentWeather()
-        }
         populateUI()
     }
 

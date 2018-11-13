@@ -2,7 +2,7 @@ package com.weather.coding.weatherselectionapp.weatherprovider
 
 import android.arch.lifecycle.ViewModel
 import android.content.Context
-import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
+import com.weather.coding.weatherselectionapp.util.SharedPreferenceUtil
 import com.weather.coding.weatherselectionapp.networkcalls.JobServiceUtil
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProvider
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
@@ -18,10 +18,11 @@ class WeatherProviderSelectionViewModel : ViewModel() {
         SharedPreferenceUtil.getInstance(applicationContext).saveWeatherProviderPref(weatherProvider)
     }
 
-    fun createPeriodicFetchCall(applicationContext: Context) {
-        JobServiceUtil.schedulePeriodicJob(applicationContext)
+    fun createPeriodicFetchCall(context: Context) {
+        JobServiceUtil.schedulePeriodicJob(context)
     }
 
+    // Save the radio button selection so that it persists configuration change
     fun saveSelectedRadioButton(weatherProvider: String) {
         selectedRadioButton = weatherProvider
     }

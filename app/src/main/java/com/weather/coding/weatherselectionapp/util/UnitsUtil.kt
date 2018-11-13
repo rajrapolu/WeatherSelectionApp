@@ -1,4 +1,4 @@
-package com.weather.coding.weatherselectionapp.Util
+package com.weather.coding.weatherselectionapp.util
 
 class UnitsUtil {
     companion object {
