@@ -26,8 +26,4 @@ class CurrentWeatherViewModel: ViewModel() {
     fun saveCurrentWeather(currentWeatherDTO: CurrentWeatherDTO) {
         mCurrentWeather = currentWeatherDTO
     }
-
-    fun getCurrentWeather(): CurrentWeatherDTO? {
-        return mCurrentWeather
-    }
 }
