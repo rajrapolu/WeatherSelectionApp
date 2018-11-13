@@ -1,7 +1,5 @@
 package com.weather.coding.weatherselectionapp.weatherproviderfactory
 
-import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
-
 /**
  * Enum class for different Weather Providers
  */

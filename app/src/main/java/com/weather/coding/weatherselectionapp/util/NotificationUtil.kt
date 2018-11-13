@@ -1,4 +1,4 @@
-package com.weather.coding.weatherselectionapp.Util
+package com.weather.coding.weatherselectionapp.util
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

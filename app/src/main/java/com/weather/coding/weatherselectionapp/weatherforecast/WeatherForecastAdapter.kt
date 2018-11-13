@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.weather.coding.weatherselectionapp.R
-import com.weather.coding.weatherselectionapp.Util.UnitsUtil
+import com.weather.coding.weatherselectionapp.util.UnitsUtil
 import com.weather.coding.weatherselectionapp.dataclasses.DayForecast
 import kotlinx.android.synthetic.main.weather_forecast_item_view.view.*
 

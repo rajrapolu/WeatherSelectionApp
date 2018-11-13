@@ -1,4 +1,4 @@
-package com.weather.coding.weatherselectionapp.Util
+package com.weather.coding.weatherselectionapp.util
 
 import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.dataclasses.*

@@ -9,7 +9,7 @@ import android.view.View
 import com.weather.coding.weatherselectionapp.ConstantsClass
 import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.R
-import com.weather.coding.weatherselectionapp.Util.UnitsUtil
+import com.weather.coding.weatherselectionapp.util.UnitsUtil
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviders
 import com.weather.coding.weatherselectionapp.weatherforecast.WeatherForecastActivity
 import kotlinx.android.synthetic.main.activity_current_weather.*

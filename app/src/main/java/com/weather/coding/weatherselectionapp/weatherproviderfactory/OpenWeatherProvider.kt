@@ -1,7 +1,7 @@
 package com.weather.coding.weatherselectionapp.weatherproviderfactory
 
 import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
-import com.weather.coding.weatherselectionapp.Util.ModelConversionUtil
+import com.weather.coding.weatherselectionapp.util.ModelConversionUtil
 import com.weather.coding.weatherselectionapp.dataclasses.LocationWeatherDTO
 import com.weather.coding.weatherselectionapp.dataclasses.WeatherForecastDTO
 import com.weather.coding.weatherselectionapp.networkcalls.NetworkCallListener

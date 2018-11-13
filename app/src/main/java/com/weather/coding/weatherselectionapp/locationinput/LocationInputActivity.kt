@@ -20,7 +20,7 @@ import com.weather.coding.weatherselectionapp.ConstantsClass
 import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.R
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.RequiredFields
-import com.weather.coding.weatherselectionapp.Util.NotificationUtil
+import com.weather.coding.weatherselectionapp.util.NotificationUtil
 import com.weather.coding.weatherselectionapp.currentweather.CurrentWeatherActivity
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
 import kotlinx.android.synthetic.main.activity_location_input.*
