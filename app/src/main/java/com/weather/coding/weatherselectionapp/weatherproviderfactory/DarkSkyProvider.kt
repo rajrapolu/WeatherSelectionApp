@@ -1,10 +1,9 @@
 package com.weather.coding.weatherselectionapp.weatherproviderfactory
 
-import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
-import com.weather.coding.weatherselectionapp.RequiredFields
+import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.Util.ModelConversionUtil
-import com.weather.coding.weatherselectionapp.WeatherForecastModel
-import com.weather.coding.weatherselectionapp.dataobjects.DarkSkyModel
+import com.weather.coding.weatherselectionapp.dataclasses.DarkSkyDTO
+import com.weather.coding.weatherselectionapp.dataclasses.WeatherForecastDTO
 import com.weather.coding.weatherselectionapp.networkcalls.NetworkCallListener
 import com.weather.coding.weatherselectionapp.networkcalls.RetrofitService
 import retrofit2.Call
@@ -24,24 +23,24 @@ class DarkSkyProvider : WeatherProvider() {
     override val fieldsRequired: RequiredFields
         get() = RequiredFields.LAT_LNG
 
-    fun getWeatherServiceEndPoint(latitude: Double, longitude: Double): Call<DarkSkyModel.DarkSkyDTO> {
+    private fun getWeatherServiceEndPoint(latitude: Double, longitude: Double): Call<DarkSkyDTO> {
         return RetrofitService().getWeatherService(baseURL)
                 .getDarkSkyData(apiKey, latitude, longitude)
     }
 
     override fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<CurrentWeatherDTO>) {
         if (latitude != null && longitude != null) {
-            getWeatherServiceEndPoint(latitude, longitude).enqueue(object : Callback<DarkSkyModel.DarkSkyDTO> {
-                override fun onFailure(call: Call<DarkSkyModel.DarkSkyDTO>?, t: Throwable?) {
+            getWeatherServiceEndPoint(latitude, longitude).enqueue(object : Callback<DarkSkyDTO> {
+                override fun onFailure(call: Call<DarkSkyDTO>?, t: Throwable?) {
                     listener.onFailure()
                 }
 
-                override fun onResponse(call: Call<DarkSkyModel.DarkSkyDTO>?, response: Response<DarkSkyModel.DarkSkyDTO>?) {
+                override fun onResponse(call: Call<DarkSkyDTO>?, response: Response<DarkSkyDTO>?) {
                     if (response != null && response.isSuccessful) {
                         if (response.body() == null) {
                             listener.onSuccess(null)
                         } else {
-                            val darkSkyDTO = response.body() as DarkSkyModel.DarkSkyDTO
+                            val darkSkyDTO = response.body() as DarkSkyDTO
                             listener.onSuccess(ModelConversionUtil.convertDarkSkyDTO(darkSkyDTO))
                         }
                     } else {
@@ -54,7 +53,8 @@ class DarkSkyProvider : WeatherProvider() {
         }
     }
 
-    override fun getWeatherForecast(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<WeatherForecastModel.WeatherForecastDTO>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    // Weather Forecast is not implemented for every provider
+    override fun getWeatherForecast(cityName: String?, countryName: String?, latitude: Double?,
+                                    longitude: Double?, listener: NetworkCallListener<WeatherForecastDTO>) {
     }
 }

@@ -1,4 +1,4 @@
-package com.weather.coding.weatherselectionapp
+package com.weather.coding.weatherselectionapp.dataclasses
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
