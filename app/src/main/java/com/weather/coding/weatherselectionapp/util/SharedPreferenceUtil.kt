@@ -1,9 +1,7 @@
-package com.weather.coding.weatherselectionapp.Util
+package com.weather.coding.weatherselectionapp.util
 
 import android.content.Context
 import android.content.SharedPreferences
-import java.util.*
-import kotlin.collections.LinkedHashSet
 
 private const val SHARED_PREF_NAME = "com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil"
 private const val CITY_NAME = "CITY_NAME_KEY"

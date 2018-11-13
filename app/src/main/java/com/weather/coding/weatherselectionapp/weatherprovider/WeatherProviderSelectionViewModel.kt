@@ -2,7 +2,7 @@ package com.weather.coding.weatherselectionapp.weatherprovider
 
 import android.arch.lifecycle.ViewModel
 import android.content.Context
-import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
+import com.weather.coding.weatherselectionapp.util.SharedPreferenceUtil
 import com.weather.coding.weatherselectionapp.networkcalls.JobServiceUtil
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProvider
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
