@@ -24,13 +24,6 @@ class CurrentWeatherActivity : AppCompatActivity() {
         setContentView(R.layout.activity_current_weather)
         mCurrentWeatherViewModel = ViewModelProviders.of(this).get(CurrentWeatherViewModel::class.java)
         currentWeather = intent.getParcelableExtra(ConstantsClass.LOCATION_WEATHER_KEY)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (currentWeather == null) {
-            currentWeather = mCurrentWeatherViewModel.getCurrentWeather()
-        }
         populateUI()
     }
 
