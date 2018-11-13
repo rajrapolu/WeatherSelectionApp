@@ -2,7 +2,7 @@ package com.weather.coding.weatherselectionapp.networkcalls
 
 import android.app.job.JobParameters
 import android.app.job.JobService
-import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
+import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.Util.NotificationUtil
 import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory

@@ -17,9 +17,9 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.places.Places
 import com.google.android.gms.location.places.ui.PlacePicker
 import com.weather.coding.weatherselectionapp.ConstantsClass
-import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
+import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.R
-import com.weather.coding.weatherselectionapp.RequiredFields
+import com.weather.coding.weatherselectionapp.weatherproviderfactory.RequiredFields
 import com.weather.coding.weatherselectionapp.Util.NotificationUtil
 import com.weather.coding.weatherselectionapp.currentweather.CurrentWeatherActivity
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory

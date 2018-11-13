@@ -1,11 +1,10 @@
 package com.weather.coding.weatherselectionapp.weatherproviderfactory
 
-import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
-import com.weather.coding.weatherselectionapp.RequiredFields
+import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.Util.ModelConversionUtil
-import com.weather.coding.weatherselectionapp.WeatherForecastModel
 import com.weather.coding.weatherselectionapp.dataclasses.WeatherBitDTO
 import com.weather.coding.weatherselectionapp.dataclasses.WeatherBitForecastDTO
+import com.weather.coding.weatherselectionapp.dataclasses.WeatherForecastDTO
 import com.weather.coding.weatherselectionapp.networkcalls.NetworkCallListener
 import com.weather.coding.weatherselectionapp.networkcalls.RetrofitService
 import retrofit2.Call
@@ -60,7 +59,7 @@ class WeatherBitProvider : WeatherProvider() {
         }
     }
 
-    override fun getWeatherForecast(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<WeatherForecastModel.WeatherForecastDTO>) {
+    override fun getWeatherForecast(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<WeatherForecastDTO>) {
         if (cityName != null) {
             getWeatherForecastEndPointService(cityName).enqueue(object : Callback<WeatherBitForecastDTO> {
                 override fun onFailure(call: Call<WeatherBitForecastDTO>?, t: Throwable?) {

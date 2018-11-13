@@ -2,8 +2,8 @@ package com.weather.coding.weatherselectionapp.weatherforecast
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
@@ -11,7 +11,7 @@ import android.view.View
 import android.widget.Toast
 import com.weather.coding.weatherselectionapp.ConstantsClass
 import com.weather.coding.weatherselectionapp.R
-import com.weather.coding.weatherselectionapp.WeatherForecastModel
+import com.weather.coding.weatherselectionapp.dataclasses.WeatherForecastDTO
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProvider
 import kotlinx.android.synthetic.main.activity_weather_forecast.*
 
@@ -53,11 +53,11 @@ class WeatherForecastActivity : AppCompatActivity() {
     }
 
     private fun startObserving() {
-        val forecastObserver: Observer<WeatherForecastModel.WeatherForecastDTO> = Observer { weatherForecast -> populateUI(weatherForecast) }
+        val forecastObserver: Observer<WeatherForecastDTO> = Observer { weatherForecast -> populateUI(weatherForecast) }
         mWeatherForecastViewModel.getWeatherForecastData().observe(this, forecastObserver)
     }
 
-    private fun populateUI(weatherForecast: WeatherForecastModel.WeatherForecastDTO?) {
+    private fun populateUI(weatherForecast: WeatherForecastDTO?) {
         weather_forecast_progress_bar.visibility = View.GONE
         weather_forecast_city_name.text = cityName
         mWeatherForecastAdapter.updateRecords(weatherForecast?.dayForecasts)

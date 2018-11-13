@@ -1,8 +1,7 @@
 package com.weather.coding.weatherselectionapp.weatherproviderfactory
 
-import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
-import com.weather.coding.weatherselectionapp.RequiredFields
-import com.weather.coding.weatherselectionapp.WeatherForecastModel
+import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
+import com.weather.coding.weatherselectionapp.dataclasses.WeatherForecastDTO
 import com.weather.coding.weatherselectionapp.networkcalls.NetworkCallListener
 
 abstract class WeatherProvider {
@@ -38,5 +37,5 @@ abstract class WeatherProvider {
      * @param longitude longitude of the location
      * @param listener callback to notify network requests
      */
-    abstract fun getWeatherForecast(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<WeatherForecastModel.WeatherForecastDTO>)
+    abstract fun getWeatherForecast(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<WeatherForecastDTO>)
 }

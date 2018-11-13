@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.weather.coding.weatherselectionapp.R
 import com.weather.coding.weatherselectionapp.Util.UnitsUtil
-import com.weather.coding.weatherselectionapp.WeatherForecastModel
+import com.weather.coding.weatherselectionapp.dataclasses.DayForecast
 import kotlinx.android.synthetic.main.weather_forecast_item_view.view.*
 
-class WeatherForecastAdapter(var mDayForecastItems: MutableList<WeatherForecastModel.DayForecast>?): RecyclerView.Adapter<WeatherForecastAdapter.WeatherForecastViewHolder>() {
+class WeatherForecastAdapter(var mDayForecastItems: MutableList<DayForecast>?) : RecyclerView.Adapter<WeatherForecastAdapter.WeatherForecastViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherForecastViewHolder {
         return WeatherForecastViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.weather_forecast_item_view, parent, false))
@@ -23,7 +23,7 @@ class WeatherForecastAdapter(var mDayForecastItems: MutableList<WeatherForecastM
         holder.bind(mDayForecastItems?.get(position))
     }
 
-    fun updateRecords(forecastItems: MutableList<WeatherForecastModel.DayForecast>?) {
+    fun updateRecords(forecastItems: MutableList<DayForecast>?) {
         if (forecastItems != null && forecastItems.isNotEmpty()) {
             mDayForecastItems = forecastItems
             notifyDataSetChanged()
@@ -31,7 +31,7 @@ class WeatherForecastAdapter(var mDayForecastItems: MutableList<WeatherForecastM
     }
 
     class WeatherForecastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(dayForecast: WeatherForecastModel.DayForecast?) {
+        fun bind(dayForecast: DayForecast?) {
             if (dayForecast != null) {
                 val context = itemView.context
                 if (context != null) {

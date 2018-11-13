@@ -7,27 +7,27 @@ import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import android.content.Context
 import com.weather.coding.weatherselectionapp.Util.SharedPreferenceUtil
-import com.weather.coding.weatherselectionapp.WeatherForecastModel
+import com.weather.coding.weatherselectionapp.dataclasses.WeatherForecastDTO
 import com.weather.coding.weatherselectionapp.networkcalls.WeatherForecastNetworkRequests
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProvider
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
 
 class WeatherForecastViewModel : ViewModel() {
-    var mWeatherForecastDTO: MutableLiveData<WeatherForecastModel.WeatherForecastDTO>? = null
+    var mWeatherForecastDTO: MutableLiveData<WeatherForecastDTO>? = null
     var mWeatherForecastRequests = WeatherForecastNetworkRequests()
-    var mForecastRequestLiveData: MutableLiveData<WeatherForecastModel.WeatherForecastDTO>? = null
-    var mWeatherResponseLiveData = MutableLiveData<WeatherForecastModel.WeatherForecastDTO>()
+    var mForecastRequestLiveData: MutableLiveData<WeatherForecastDTO>? = null
+    var mWeatherResponseLiveData = MutableLiveData<WeatherForecastDTO>()
 
     // This method observes on the changes on network request and notifies the activity when data is available
-    fun getWeatherForecastData(): MutableLiveData<WeatherForecastModel.WeatherForecastDTO> {
+    fun getWeatherForecastData(): MutableLiveData<WeatherForecastDTO> {
         mForecastRequestLiveData = mWeatherForecastRequests.getForecastRequestLiveData()
-        mWeatherForecastDTO = Transformations.switchMap(mForecastRequestLiveData as MutableLiveData, object : Function<WeatherForecastModel.WeatherForecastDTO, LiveData<WeatherForecastModel.WeatherForecastDTO>> {
-            override fun apply(weatherForecast: WeatherForecastModel.WeatherForecastDTO?): LiveData<WeatherForecastModel.WeatherForecastDTO> {
+        mWeatherForecastDTO = Transformations.switchMap(mForecastRequestLiveData as MutableLiveData, object : Function<WeatherForecastDTO, LiveData<WeatherForecastDTO>> {
+            override fun apply(weatherForecast: WeatherForecastDTO?): LiveData<WeatherForecastDTO> {
                 mWeatherResponseLiveData.value = weatherForecast
                 return mWeatherResponseLiveData
             }
-        }) as MutableLiveData<WeatherForecastModel.WeatherForecastDTO>
-        return mWeatherForecastDTO as MutableLiveData<WeatherForecastModel.WeatherForecastDTO>
+        }) as MutableLiveData<WeatherForecastDTO>
+        return mWeatherForecastDTO as MutableLiveData<WeatherForecastDTO>
     }
 
 
