@@ -1,6 +1,6 @@
 package com.weather.coding.weatherselectionapp
 
-import com.weather.coding.weatherselectionapp.dataobjects.OpenWeatherModel
+import com.weather.coding.weatherselectionapp.dataclasses.LocationWeatherDTO
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.OpenWeatherProvider
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -8,7 +8,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-class OpenWeatherModelTest: WeatherTest() {
+class OpenWeatherModelTest : WeatherTest() {
     lateinit var mOpenWeather: OpenWeatherProvider
 
     override fun initSetUp() {
@@ -20,7 +20,7 @@ class OpenWeatherModelTest: WeatherTest() {
 
     @Test
     fun testOpenWeatherModel() {
-        val locationWeatherDTO: OpenWeatherModel.LocationWeatherDTO? =
+        val locationWeatherDTO: LocationWeatherDTO? =
                 mOpenWeather.getWeatherServiceEndPoint("boston", "us").execute().body()
         assertEquals("Boston", locationWeatherDTO?.city?.name)
         // To fail the test case
@@ -29,7 +29,7 @@ class OpenWeatherModelTest: WeatherTest() {
 
     @Test
     fun testFailureOpenWeatherModel() {
-        val locationWeatherDTO: OpenWeatherModel.LocationWeatherDTO? =
+        val locationWeatherDTO: LocationWeatherDTO? =
                 mOpenWeather.getWeatherServiceEndPoint("boston", "ma").execute().body()
 
         assertEquals(null, locationWeatherDTO)
