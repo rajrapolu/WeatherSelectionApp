@@ -1,10 +1,9 @@
 package com.weather.coding.weatherselectionapp.weatherproviderfactory
 
-import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
-import com.weather.coding.weatherselectionapp.RequiredFields
+import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.Util.ModelConversionUtil
-import com.weather.coding.weatherselectionapp.WeatherForecastModel
 import com.weather.coding.weatherselectionapp.dataclasses.FiveDayWeatherDataDTO
+import com.weather.coding.weatherselectionapp.dataclasses.WeatherForecastDTO
 import com.weather.coding.weatherselectionapp.networkcalls.NetworkCallListener
 import com.weather.coding.weatherselectionapp.networkcalls.RetrofitService
 import retrofit2.Call
@@ -23,8 +22,7 @@ class FiveDayWeatherProvider : WeatherProvider() {
     override val fieldsRequired: RequiredFields
         get() = RequiredFields.CITY_NAME
 
-    fun getWeatherServiceEndPoint(cityName: String): Call<FiveDayWeatherDataDTO>
-    {
+    fun getWeatherServiceEndPoint(cityName: String): Call<FiveDayWeatherDataDTO> {
         return RetrofitService().getWeatherService(baseURL)
                 .getFiveDayWeatherData(cityName)
     }
@@ -57,6 +55,6 @@ class FiveDayWeatherProvider : WeatherProvider() {
 
     // Weather Forecast is not implemented for every provider
     override fun getWeatherForecast(cityName: String?, countryName: String?, latitude: Double?,
-                                    longitude: Double?, listener: NetworkCallListener<WeatherForecastModel.WeatherForecastDTO>) {
+                                    longitude: Double?, listener: NetworkCallListener<WeatherForecastDTO>) {
     }
 }

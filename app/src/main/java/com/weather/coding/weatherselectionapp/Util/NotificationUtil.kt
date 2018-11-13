@@ -10,7 +10,7 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import com.weather.coding.weatherselectionapp.ConstantsClass
-import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
+import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.R
 import com.weather.coding.weatherselectionapp.currentweather.CurrentWeatherActivity
 

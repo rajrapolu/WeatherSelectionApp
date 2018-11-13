@@ -1,7 +1,7 @@
 package com.weather.coding.weatherselectionapp.networkcalls
 
 import android.arch.lifecycle.MutableLiveData
-import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
+import com.weather.coding.weatherselectionapp.dataclasses.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviderFactory
 
 class NetworkRequests : NetworkCallListener<CurrentWeatherDTO> {
