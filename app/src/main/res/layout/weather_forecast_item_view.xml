@@ -52,13 +52,4 @@
         app:layout_constraintTop_toTopOf="@+id/weather_max_temp"
         tools:text="min_temp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/seperator_width"
-        android:layout_marginTop="@dimen/default_margin_padding"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/seperatorColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weather_min_temp" />
-
 </android.support.constraint.ConstraintLayout>

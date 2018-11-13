@@ -4,6 +4,8 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -14,7 +16,7 @@ import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProv
 import kotlinx.android.synthetic.main.activity_weather_forecast.*
 
 class WeatherForecastActivity : AppCompatActivity() {
-    lateinit var mWeatherForecastViewModel: WeatherForecastViewModel
+    private lateinit var mWeatherForecastViewModel: WeatherForecastViewModel
     private var cityName: String? = null
     private lateinit var mWeatherForecastAdapter: WeatherForecastAdapter
 
@@ -29,6 +31,7 @@ class WeatherForecastActivity : AppCompatActivity() {
     private fun setUpRecyclerView() {
         mWeatherForecastAdapter = WeatherForecastAdapter(null)
         weather_forecast_recycler_view.adapter = mWeatherForecastAdapter
+        weather_forecast_recycler_view.addItemDecoration(DividerItemDecoration(this, RecyclerView.VERTICAL))
     }
 
     /**
@@ -60,7 +63,7 @@ class WeatherForecastActivity : AppCompatActivity() {
         mWeatherForecastAdapter.updateRecords(weatherForecast?.dayForecasts)
     }
 
-    fun getWeatherForecast(weatherProvider: WeatherProvider) {
+    private fun getWeatherForecast(weatherProvider: WeatherProvider) {
         if (cityName != null) {
             weather_forecast_progress_bar.visibility = View.VISIBLE
             mWeatherForecastViewModel.getWeatherForecast(weatherProvider, cityName!!, null, null, null)
