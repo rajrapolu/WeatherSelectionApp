@@ -1,11 +1,11 @@
 package com.weather.coding.weatherselectionapp
 
-import com.weather.coding.weatherselectionapp.dataobjects.WeatherBitModel
+import com.weather.coding.weatherselectionapp.dataclasses.WeatherBitDTO
 import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherBitProvider
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class WeatherBitModelTest: WeatherTest() {
+class WeatherBitModelTest : WeatherTest() {
     lateinit var mWeatherBit: WeatherBitProvider
 
     override fun initSetUp() {
@@ -17,7 +17,7 @@ class WeatherBitModelTest: WeatherTest() {
 
     @Test
     fun testWeatherBit() {
-        val weatherBitDTO: WeatherBitModel.WeatherBitDTO? =
+        val weatherBitDTO: WeatherBitDTO? =
                 mWeatherBit.getWeatherServiceEndPoint("boston").execute().body()
 
         assertEquals("Boston", weatherBitDTO?.data?.get(0)?.cityName)

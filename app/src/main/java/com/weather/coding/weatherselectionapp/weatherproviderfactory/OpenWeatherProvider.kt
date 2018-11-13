@@ -4,7 +4,7 @@ import com.weather.coding.weatherselectionapp.CurrentWeatherDTO
 import com.weather.coding.weatherselectionapp.RequiredFields
 import com.weather.coding.weatherselectionapp.Util.ModelConversionUtil
 import com.weather.coding.weatherselectionapp.WeatherForecastModel
-import com.weather.coding.weatherselectionapp.dataobjects.OpenWeatherModel
+import com.weather.coding.weatherselectionapp.dataclasses.LocationWeatherDTO
 import com.weather.coding.weatherselectionapp.networkcalls.NetworkCallListener
 import com.weather.coding.weatherselectionapp.networkcalls.RetrofitService
 import retrofit2.Call
@@ -24,24 +24,24 @@ class OpenWeatherProvider : WeatherProvider() {
         get() = "http://api.openweathermap.org/"
     val units = "imperial"
 
-    fun getWeatherServiceEndPoint(cityName: String, countryName: String): Call<OpenWeatherModel.LocationWeatherDTO> {
+    fun getWeatherServiceEndPoint(cityName: String, countryName: String): Call<LocationWeatherDTO> {
         return RetrofitService().getWeatherService(baseURL).getOpenWeatherData("$cityName,$countryName", units, apiKey)
     }
 
     override fun getWeatherInformation(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<CurrentWeatherDTO>) {
         if (cityName != null && countryName != null) {
             getWeatherServiceEndPoint(cityName, countryName)
-                    .enqueue(object : Callback<OpenWeatherModel.LocationWeatherDTO> {
-                        override fun onFailure(call: Call<OpenWeatherModel.LocationWeatherDTO>?, t: Throwable?) {
+                    .enqueue(object : Callback<LocationWeatherDTO> {
+                        override fun onFailure(call: Call<LocationWeatherDTO>?, t: Throwable?) {
                             listener.onFailure()
                         }
 
-                        override fun onResponse(call: Call<OpenWeatherModel.LocationWeatherDTO>?, response: Response<OpenWeatherModel.LocationWeatherDTO>?) {
+                        override fun onResponse(call: Call<LocationWeatherDTO>?, response: Response<LocationWeatherDTO>?) {
                             if (response != null && response.isSuccessful) {
                                 if (response.body() == null) {
                                     listener.onSuccess(null)
                                 } else {
-                                    val locationWeatherDTO = response.body() as OpenWeatherModel.LocationWeatherDTO
+                                    val locationWeatherDTO = response.body() as LocationWeatherDTO
                                     listener.onSuccess(ModelConversionUtil.convertOpenWeatherResponse(locationWeatherDTO))
                                 }
                             } else {
