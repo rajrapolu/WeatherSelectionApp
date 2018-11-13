@@ -17,9 +17,8 @@ class WeatherBitProvider : WeatherProvider() {
         get() = true
     override val baseURL: String
         get() = "https://api.weatherbit.io/"
-    // Add your api key
     override val apiKey: String
-        get() = ""
+        get() = "fd2bd93ad0fd45faba9a8f658fab3cdf"
     override val fieldsRequired: RequiredFields
         get() = RequiredFields.CITY_NAME
     override val displayName: String
