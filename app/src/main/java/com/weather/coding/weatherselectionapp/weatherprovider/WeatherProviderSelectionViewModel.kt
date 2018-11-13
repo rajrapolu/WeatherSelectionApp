@@ -18,10 +18,11 @@ class WeatherProviderSelectionViewModel : ViewModel() {
         SharedPreferenceUtil.getInstance(applicationContext).saveWeatherProviderPref(weatherProvider)
     }
 
-    fun createPeriodicFetchCall(applicationContext: Context) {
-        JobServiceUtil.schedulePeriodicJob(applicationContext)
+    fun createPeriodicFetchCall(context: Context) {
+        JobServiceUtil.schedulePeriodicJob(context)
     }
 
+    // Save the radio button selection so that it persists configuration change
     fun saveSelectedRadioButton(weatherProvider: String) {
         selectedRadioButton = weatherProvider
     }

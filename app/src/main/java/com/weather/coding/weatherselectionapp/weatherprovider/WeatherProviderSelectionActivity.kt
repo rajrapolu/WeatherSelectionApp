@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.activity_weather_provider_selection.*
 
 class WeatherProviderSelectionActivity : AppCompatActivity() {
 
-    var mWeatherProvider: String? = null
-    lateinit var mWeatherViewModel: WeatherProviderSelectionViewModel
+    private var mWeatherProvider: String? = null
+    private lateinit var mWeatherViewModel: WeatherProviderSelectionViewModel
 
-    val onRadioButtonClickListener = View.OnClickListener { view -> onRadioButtonClicked(view) }
+    private val onRadioButtonClickListener = View.OnClickListener { view -> onRadioButtonClicked(view) }
 
     private fun onRadioButtonClicked(view: View) {
         if ((view as RadioButton).isChecked) {
@@ -38,7 +38,7 @@ class WeatherProviderSelectionActivity : AppCompatActivity() {
     }
 
     /**
-     * Create the radio group for weather provider and inflates button layout
+     * Creates the radio group for weather provider and inflates button layout
      */
     private fun createViewsForActivity() {
         val inflater: LayoutInflater = LayoutInflater.from(this)
