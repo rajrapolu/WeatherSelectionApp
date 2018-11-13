@@ -10,7 +10,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import com.weather.coding.weatherselectionapp.R
-import com.weather.coding.weatherselectionapp.WeatherProviders
+import com.weather.coding.weatherselectionapp.weatherproviderfactory.WeatherProviders
 import com.weather.coding.weatherselectionapp.locationinput.LocationInputActivity
 import kotlinx.android.synthetic.main.activity_weather_provider_selection.*
 

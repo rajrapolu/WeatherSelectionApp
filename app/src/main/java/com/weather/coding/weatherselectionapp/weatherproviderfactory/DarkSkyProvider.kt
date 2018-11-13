@@ -24,7 +24,7 @@ class DarkSkyProvider : WeatherProvider() {
     override val fieldsRequired: RequiredFields
         get() = RequiredFields.LAT_LNG
 
-    fun getWeatherServiceEndPoint(latitude: Double, longitude: Double): Call<DarkSkyModel.DarkSkyDTO> {
+    private fun getWeatherServiceEndPoint(latitude: Double, longitude: Double): Call<DarkSkyModel.DarkSkyDTO> {
         return RetrofitService().getWeatherService(baseURL)
                 .getDarkSkyData(apiKey, latitude, longitude)
     }
@@ -54,7 +54,8 @@ class DarkSkyProvider : WeatherProvider() {
         }
     }
 
-    override fun getWeatherForecast(cityName: String?, countryName: String?, latitude: Double?, longitude: Double?, listener: NetworkCallListener<WeatherForecastModel.WeatherForecastDTO>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    // Weather Forecast is not implemented for every provider
+    override fun getWeatherForecast(cityName: String?, countryName: String?, latitude: Double?,
+                                    longitude: Double?, listener: NetworkCallListener<WeatherForecastModel.WeatherForecastDTO>) {
     }
 }

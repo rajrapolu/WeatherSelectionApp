@@ -25,7 +25,7 @@ class WeatherBitProvider : WeatherProvider() {
         get() = "WeatherBit Api"
     val units = "I"
 
-    fun getWeatherServiceEndPoint(cityName: String): Call<WeatherBitModel.WeatherBitDTO> {
+    private fun getWeatherServiceEndPoint(cityName: String): Call<WeatherBitModel.WeatherBitDTO> {
         return RetrofitService().getWeatherService(baseURL)
                 .getWeatherBitData(cityName, units, apiKey)
     }
