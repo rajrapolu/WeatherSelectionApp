@@ -18,6 +18,7 @@ class WeatherForecastViewModel : ViewModel() {
     var mForecastRequestLiveData: MutableLiveData<WeatherForecastModel.WeatherForecastDTO>? = null
     var mWeatherResponseLiveData = MutableLiveData<WeatherForecastModel.WeatherForecastDTO>()
 
+    // This method observes on the changes on network request and notifies the activity when data is available
     fun getWeatherForecastData(): MutableLiveData<WeatherForecastModel.WeatherForecastDTO> {
         mForecastRequestLiveData = mWeatherForecastRequests.getForecastRequestLiveData()
         mWeatherForecastDTO = Transformations.switchMap(mForecastRequestLiveData as MutableLiveData, object : Function<WeatherForecastModel.WeatherForecastDTO, LiveData<WeatherForecastModel.WeatherForecastDTO>> {
